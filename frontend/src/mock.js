@@ -6,51 +6,45 @@ export const brand = {
 };
 
 export const galleryImages = [
-  // Premium, moody cocktail images curated by vision agent
+  // Premium, moody cocktail images curated by vision agent - optimized URLs
   {
     id: "u-1621873495884",
-    url:
-      "https://images.unsplash.com/photo-1621873495884-845a939892d1?crop=entropy&cs=srgb&fm=jpg&q=85",
+    url: "https://images.unsplash.com/photo-1621873495884-845a939892d1?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
     alt: "Smoky whiskey cocktail on dark background",
   },
   {
     id: "u-1655546836727",
-    url:
-      "https://images.unsplash.com/photo-1655546836727-bec4387b02e2?crop=entropy&cs=srgb&fm=jpg&q=85",
+    url: "https://images.unsplash.com/photo-1655546836727-bec4387b02e2?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
     alt: "Garnished cocktail with orange peel",
   },
   {
     id: "u-1615887023516",
-    url:
-      "https://images.unsplash.com/photo-1615887023516-9b6bcd559e87?crop=entropy&cs=srgb&fm=jpg&q=85",
+    url: "https://images.unsplash.com/photo-1615887023516-9b6bcd559e87?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
     alt: "Elegant coupe glass with deep amber drink",
   },
   {
     id: "p-2575697",
-    url: "https://images.pexels.com/photos/2575697/pexels-photo-2575697.jpeg",
+    url: "https://images.pexels.com/photos/2575697/pexels-photo-2575697.jpeg?w=800&h=600&fit=crop&auto=compress&cs=tinysrgb",
     alt: "Neon-lit cocktail with mint on black",
   },
   {
     id: "p-2860686",
-    url: "https://images.pexels.com/photos/2860686/pexels-photo-2860686.jpeg",
+    url: "https://images.pexels.com/photos/2860686/pexels-photo-2860686.jpeg?w=800&h=600&fit=crop&auto=compress&cs=tinysrgb",
     alt: "Classic cocktail with ice on black table",
   },
   {
     id: "u-1597241693839",
-    url:
-      "https://images.unsplash.com/photo-1597241693839-07d7fb803af1?crop=entropy&cs=srgb&fm=jpg&q=85",
+    url: "https://images.unsplash.com/photo-1597241693839-07d7fb803af1?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
     alt: "Pouring drink with dramatic splash",
   },
   {
     id: "u-1617721042693",
-    url:
-      "https://images.unsplash.com/photo-1617721042693-0812f6d26d44?crop=entropy&cs=srgb&fm=jpg&q=85",
+    url: "https://images.unsplash.com/photo-1617721042693-0812f6d26d44?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
     alt: "Two moody cocktails with citrus garnish",
   },
   {
     id: "u-1611031961555",
-    url:
-      "https://images.unsplash.com/photo-1611031961555-9b9ad46f6b73?crop=entropy&cs=srgb&fm=jpg&q=85",
+    url: "https://images.unsplash.com/photo-1611031961555-9b9ad46f6b73?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
     alt: "Minimal black cocktail with smoke",
   },
 ];

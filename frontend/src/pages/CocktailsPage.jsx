@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { signatureCocktails, imageById } from "../mock";
 import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
@@ -17,12 +17,24 @@ export default function CocktailsPage() {
   }, []);
 
   const list = useMemo(() => {
+    if (query === "" && tag === "all") {
+      return signatureCocktails; // Return all if no filters
+    }
+    
     return signatureCocktails.filter((c) => {
-      const matchesQuery = c.name.toLowerCase().includes(query.toLowerCase());
+      const matchesQuery = query === "" || c.name.toLowerCase().includes(query.toLowerCase());
       const matchesTag = tag === "all" || c.tags.includes(tag);
       return matchesQuery && matchesTag;
     });
   }, [query, tag]);
+
+  const handleQueryChange = useCallback((e) => {
+    setQuery(e.target.value);
+  }, []);
+
+  const handleTagChange = useCallback((newTag) => {
+    setTag(newTag);
+  }, []);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-16">
@@ -32,13 +44,13 @@ export default function CocktailsPage() {
           <p className="mt-2 text-sm text-muted-foreground">Prebrskajte naš izbor signature pijač.</p>
         </div>
         <div className="flex flex-wrap items-center justify-end gap-3">
-          <Input placeholder="Išči koktajl" value={query} onChange={(e) => setQuery(e.target.value)} className="w-48 bg-black/30 dark:bg-black/30" />
+          <Input placeholder="Išči koktajl" value={query} onChange={handleQueryChange} className="w-48 bg-black/30 dark:bg-black/30" />
           <div className="flex flex-wrap gap-2">
             {tags.map((t) => (
               <button
                 key={t}
-                onClick={() => setTag(t)}
-                className={`rounded-full border px-3 py-1 text-xs ${tag === t ? "border-primary text-primary" : "border-white/10 text-muted-foreground"}`}
+                onClick={() => handleTagChange(t)}
+                className={`rounded-full border px-3 py-1 text-xs transition-colors ${tag === t ? "border-primary text-primary" : "border-white/10 text-muted-foreground hover:border-white/20"}`}
               >
                 {t}
               </button>
@@ -48,9 +60,15 @@ export default function CocktailsPage() {
       </div>
 
       <div className="reveal-grid grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {list.map((c) => (
+        {list.map((c, index) => (
           <Card key={c.id} className="reveal-card overflow-hidden border-white/10 bg-black/40 dark:bg-black/40">
-            <img src={imageById(c.imageId)} alt={c.name} className="h-60 w-full object-cover" />
+            <img 
+              src={imageById(c.imageId)} 
+              alt={c.name} 
+              className="h-60 w-full object-cover" 
+              loading={index < 6 ? "eager" : "lazy"}
+              decoding="async"
+            />
             <CardContent className="space-y-2 p-5">
               <div className="flex items-center justify-between">
                 <h3 className="font-serif text-xl">{c.name}</h3>

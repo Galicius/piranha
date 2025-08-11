@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
@@ -11,7 +11,8 @@ import { useForm } from "react-hook-form";
 import { brand, galleryImages, signatureCocktails, imageById, aboutQuotes, hours } from "../mock";
 import { CheckCircle2 } from "lucide-react";
 import useGsapAnimations from "../hooks/useGsapAnimations";
-import ThreeDiamond from "../components/ThreeDiamond";
+
+import ImageLightbox from "../components/ImageLightbox";
 
 function Section({ id, children, className = "" }) {
   return (
@@ -21,20 +22,55 @@ function Section({ id, children, className = "" }) {
 
 export default function Landing() {
   useGsapAnimations();
+  
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const openLightbox = useCallback((index) => {
+    setCurrentImageIndex(index);
+    setLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false);
+  }, []);
+
+  const goToPrevious = useCallback(() => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? galleryImages.length - 1 : prev - 1
+    );
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setCurrentImageIndex((prev) => 
+      prev === galleryImages.length - 1 ? 0 : prev + 1
+    );
+  }, []);
+
   return (
     <div>
-      <Hero />
+      <Hero openLightbox={openLightbox} />
       <SignatureMenu />
       <About />
-      <Gallery />
+      <Gallery openLightbox={openLightbox} />
       <CTA />
       <Contact />
       <Hours />
+      
+      {/* Lightbox */}
+      <ImageLightbox
+        isOpen={lightboxOpen}
+        onClose={closeLightbox}
+        images={galleryImages}
+        currentIndex={currentImageIndex}
+        onPrevious={goToPrevious}
+        onNext={goToNext}
+      />
     </div>
   );
 }
 
-function Hero() {
+function Hero({ openLightbox }) {
   return (
     <div className="relative overflow-hidden">
       {/* subtle top glow */}
@@ -43,9 +79,7 @@ function Hero() {
       <Section className="flex flex-col items-center gap-12 pb-20 pt-16 md:flex-row md:items-end md:gap-16 md:pb-28 md:pt-24">
         {/* Left copy */}
         <div className="relative z-10 max-w-xl" data-anim="fade-up">
-          <div className="pointer-events-none absolute -left-16 -top-14 hidden md:block opacity-70">
-            <ThreeDiamond className="h-28 w-28" intensity={0.8} />
-          </div>
+
           <p className="text-xs uppercase tracking-[0.35em] text-[hsl(var(--brand-accent))]">{brand.tagline}</p>
           <h1 className="mt-3 font-serif text-5xl leading-[1.1] md:text-6xl">
             {brand.name} <span className="text-primary">Cocktail</span> Bureau
@@ -64,14 +98,21 @@ function Hero() {
         </div>
 
         {/* Right media carousel */}
-        <div className="relative z-10 w-full max-w-xl md:max-w-2xl parallax-y" data-anim="fade-up">
+        <div className="relative z-10 w-full max-w-xl md:max-w-2xl" data-anim="fade-up">
           <div className="glass rounded-2xl p-3">
-            <Carousel className="w-full" plugins={[Autoplay({ delay: 3200, stopOnMouseEnter: true, stopOnInteraction: false })]}>
+            <Carousel className="w-full" plugins={[Autoplay({ delay: 4000, stopOnMouseEnter: true, stopOnInteraction: false })]}>
               <CarouselContent>
-                {galleryImages.slice(0, 5).map((img) => (
+                {galleryImages.slice(0, 5).map((img, index) => (
                   <CarouselItem key={img.id} className="basis-full">
                     <div className="overflow-hidden rounded-xl">
-                      <img src={img.url} alt={img.alt} className="h-[420px] w-full object-cover"/>
+                      <img 
+                        src={img.url} 
+                        alt={img.alt} 
+                        className="h-[420px] w-full object-cover cursor-pointer hover:brightness-110 transition-all duration-300"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                        onClick={() => openLightbox(index)}
+                      />
                     </div>
                   </CarouselItem>
                 ))}
@@ -160,16 +201,23 @@ function About() {
   );
 }
 
-function Gallery() {
+function Gallery({ openLightbox }) {
   return (
     <Section id="gallery" className="py-20">
       <h2 className="mb-8 font-serif text-3xl" data-anim="fade-up">Galerija</h2>
       <Carousel className="w-full" data-anim="fade-up" plugins={[Autoplay({ delay: 3000, stopOnMouseEnter: true, stopOnInteraction: false })]}>
         <CarouselContent>
-          {galleryImages.map((img) => (
+          {galleryImages.map((img, index) => (
             <CarouselItem key={img.id} className="basis-full md:basis-1/2 lg:basis-1/3">
               <div className="glass overflow-hidden rounded-xl">
-                <img src={img.url} alt={img.alt} className="h-64 w-full object-cover" />
+                <img 
+                  src={img.url} 
+                  alt={img.alt} 
+                  className="h-64 w-full object-cover cursor-pointer hover:brightness-110 transition-all duration-300" 
+                  onClick={() => openLightbox(index)}
+                  loading={index < 3 ? "eager" : "lazy"}
+                  decoding="async"
+                />
               </div>
             </CarouselItem>
           ))}

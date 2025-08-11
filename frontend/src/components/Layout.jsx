@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Button } from "../components/ui/button";
 import { cn } from "../lib/utils";
-import { Menu, X, Instagram, Phone, MapPin } from "lucide-react";
+import { Menu, X, Instagram, Phone, MapPin, Sun, Moon } from "lucide-react";
 import { brand } from "../mock";
+import { Switch } from "../components/ui/switch";
+import { useTheme } from "next-themes";
 
-// small util (shadcn's cn function if available). Fallback simple join.
 function clsx(...args) {
   return args.filter(Boolean).join(" ");
 }
 
 export default function Layout({ children }) {
   const [open, setOpen] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
 
   const NavLink = ({ href, children }) => (
     <a
@@ -27,7 +29,7 @@ export default function Layout({ children }) {
       {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="mt-4 flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-xl">
+          <div className="mt-4 flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-xl dark:bg-black/40 dark:border-white/10">
             {/* Logo */}
             <a href="#top" className="flex items-center gap-3">
               <DiamondLogo />
@@ -37,18 +39,28 @@ export default function Layout({ children }) {
               </div>
             </a>
 
-            <nav className="hidden items-center gap-8 md:flex">
+            <nav className="hidden items-center gap-6 md:flex">
               <NavLink href="#menu">Meni</NavLink>
               <NavLink href="#about">O nas</NavLink>
               <NavLink href="#gallery">Galerija</NavLink>
               <NavLink href="#hours">Delovni čas</NavLink>
+              {/* Theme toggle */}
+              <div className="flex items-center gap-2">
+                <Sun size={16} className="text-muted-foreground" />
+                <Switch
+                  checked={resolvedTheme !== "dark"}
+                  onCheckedChange={(v) => setTheme(v ? "light" : "dark")}
+                  aria-label="Theme toggle"
+                />
+                <Moon size={16} className="text-muted-foreground" />
+              </div>
               <a href="#contact">
                 <Button className="bg-primary text-black hover:brightness-110">Kontakt</Button>
               </a>
             </nav>
 
             <button
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-black/30 text-white/90"
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-black/30 text-white/90 dark:bg-black/30"
               onClick={() => setOpen((o) => !o)}
               aria-label="toggle menu"
             >
@@ -60,8 +72,20 @@ export default function Layout({ children }) {
         {/* Mobile menu */}
         {open && (
           <div className="mx-auto max-w-7xl px-4">
-            <div className="mt-2 rounded-xl border border-white/10 bg-black/60 p-4 backdrop-blur-xl md:hidden">
+            <div className="mt-2 rounded-xl border border-white/10 bg-black/60 p-4 backdrop-blur-xl md:hidden dark:bg-black/60">
               <div className="grid gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">Light mode</span>
+                  <div className="flex items-center gap-2">
+                    <Sun size={14} className="text-muted-foreground" />
+                    <Switch
+                      checked={resolvedTheme !== "dark"}
+                      onCheckedChange={(v) => setTheme(v ? "light" : "dark")}
+                      aria-label="Theme toggle"
+                    />
+                    <Moon size={14} className="text-muted-foreground" />
+                  </div>
+                </div>
                 <NavLink href="#menu">Meni</NavLink>
                 <NavLink href="#about">O nas</NavLink>
                 <NavLink href="#gallery">Galerija</NavLink>
@@ -78,7 +102,7 @@ export default function Layout({ children }) {
       <main id="top" className="pt-24">{children}</main>
 
       {/* Footer */}
-      <footer className="mt-24 border-t border-white/10/ bg-black/60">
+      <footer className="mt-24 border-t border-white/10/ bg-black/60 dark:bg-black/60">
         <div className="mx-auto max-w-7xl px-4 py-12">
           <div className="grid gap-10 md:grid-cols-3">
             <div className="flex items-center gap-3">

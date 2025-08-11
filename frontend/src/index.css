@@ -4,15 +4,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* LIGHT THEME (default) */
 :root {
-  /* Brand palette: black background, gold primary (#f4ce90), accent teal (#0B788A) */
+  --background: 45 25% 96%; /* warm off-white */
+  --foreground: 24 10% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 24 10% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 24 10% 12%;
+  --primary: 37 82% 76%; /* #f4ce90 */
+  --primary-foreground: 0 0% 5%;
+  --secondary: 45 20% 92%;
+  --secondary-foreground: 24 10% 12%;
+  --muted: 45 10% 88%;
+  --muted-foreground: 24 6% 40%;
+  --accent: 45 16% 92%;
+  --accent-foreground: 24 10% 12%;
+  --destructive: 0 73% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 45 12% 86%;
+  --input: 45 12% 86%;
+  --ring: 37 82% 40%;
+  --brand-accent: 188 85% 29%; /* #0B788A */
+  --radius: 0.75rem;
+}
+
+/* DARK THEME */
+.dark {
   --background: 0 0% 0%;
   --foreground: 0 0% 98%;
   --card: 0 0% 6%;
   --card-foreground: 0 0% 98%;
   --popover: 0 0% 6%;
   --popover-foreground: 0 0% 98%;
-  --primary: 37 82% 76%; /* #f4ce90 */
+  --primary: 37 82% 76%;
   --primary-foreground: 0 0% 5%;
   --secondary: 0 0% 12%;
   --secondary-foreground: 0 0% 98%;
@@ -25,12 +50,8 @@
   --border: 0 0% 18%;
   --input: 0 0% 18%;
   --ring: 37 82% 76%;
-  --brand-accent: 188 85% 29%; /* #0B788A */
+  --brand-accent: 188 85% 29%;
   --radius: 0.75rem;
-}
-
-.dark {
-  --background: 0 0% 0%;
 }
 
 @layer base {
@@ -42,9 +63,8 @@
 }
 
 @layer components {
-  .glass { @apply bg-white/5 backdrop-blur-xl border border-white/10; }
+  .glass { @apply bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-black/10 dark:border-white/10; }
 }
 
-/* Subtle animations */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
 .fade-up { animation: fadeUp 0.5s ease-out both; }

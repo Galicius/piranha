@@ -1,0 +1,276 @@
+import React, { useMemo } from "react";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../components/ui/carousel";
+import { useToast } from "../hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { brand, galleryImages, signatureCocktails, imageById, aboutQuotes, hours } from "../mock";
+import { CheckCircle2 } from "lucide-react";
+
+function Section({ id, children, className = "" }) {
+  return (
+    <section id={id} className={`relative mx-auto max-w-7xl px-4 ${className}`}>{children}</section>
+  );
+}
+
+export default function Landing() {
+  return (
+    <div>
+      <Hero />
+      <SignatureMenu />
+      <About />
+      <Gallery />
+      <CTA />
+      <Contact />
+      <Hours />
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <div className="relative overflow-hidden">
+      {/* subtle top glow */}
+      <div className="pointer-events-none absolute inset-x-0 -top-32 z-0 h-72 bg-gradient-to-b from-white/10 to-transparent blur-2xl" />
+
+      <Section className="flex flex-col items-center gap-12 pb-20 pt-16 md:flex-row md:items-end md:gap-16 md:pb-28 md:pt-24">
+        {/* Left copy */}
+        <div className="relative z-10 max-w-xl">
+          <p className="text-xs uppercase tracking-[0.35em] text-[hsl(var(--brand-accent))]">{brand.tagline}</p>
+          <h1 className="mt-3 font-serif text-5xl leading-[1.1] md:text-6xl">
+            {brand.name} <span className="text-primary">Cocktail</span> Bureau
+          </h1>
+          <p className="mt-4 max-w-md text-muted-foreground">
+            Črno ozadje. Zlate podrobnosti. Koktajli, ki ukradejo pozornost. Dobrodošli v Piranhi – doma najboljših pijač.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#contact">
+              <Button className="bg-primary text-black hover:brightness-110">Kontaktiraj nas</Button>
+            </a>
+            <a href="#menu">
+              <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">Poglej meni</Button>
+            </a>
+          </div>
+        </div>
+
+        {/* Right media carousel */}
+        <div className="relative z-10 w-full max-w-xl md:max-w-2xl">
+          <div className="glass rounded-2xl p-3">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {galleryImages.slice(0, 5).map((img) => (
+                  <CarouselItem key={img.id} className="basis-full">
+                    <div className="overflow-hidden rounded-xl">
+                      <img src={img.url} alt={img.alt} className="h-[420px] w-full object-cover"/>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="-left-3 border-white/20 bg-black/40 hover:bg-black/60" />
+              <CarouselNext className="-right-3 border-white/20 bg-black/40 hover:bg-black/60" />
+            </Carousel>
+          </div>
+        </div>
+      </Section>
+    </div>
+  );
+}
+
+function SignatureMenu() {
+  return (
+    <Section id="menu" className="py-20">
+      <div className="mb-10 flex items-end justify-between">
+        <div>
+          <h2 className="font-serif text-3xl md:text-4xl">Signature koktajli</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Najbolj priljubljene kreacije hiše Piranha.</p>
+        </div>
+        <a href="#contact">
+          <Button className="bg-primary text-black hover:brightness-110">Rezervacija</Button>
+        </a>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {signatureCocktails.map((c) => (
+          <Card key={c.id} className="group relative overflow-hidden border-white/10 bg-black/40">
+            <div className="overflow-hidden">
+              <img src={imageById(c.imageId)} alt={c.name} className="h-56 w-full object-cover transition-[filter] duration-500 group-hover:brightness-110" />
+            </div>
+            <CardContent className="space-y-2 p-5">
+              <div className="flex items-center justify-between">
+                <h3 className="font-serif text-xl">{c.name}</h3>
+                <span className="rounded-md border border-primary/40 px-2 py-0.5 text-sm text-primary">€ {c.price}</span>
+              </div>
+              <p className="text-sm text-muted-foreground">{c.blurb}</p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                {c.tags.map((t) => (
+                  <span key={t} className="rounded-full border border-white/10 px-2 py-0.5 text-[12px] text-muted-foreground">{t}</span>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function About() {
+  return (
+    <Section id="about" className="py-24">
+      <div className="grid items-start gap-12 md:grid-cols-2">
+        <div>
+          <p className="text-xs uppercase tracking-[0.35em] text-[hsl(var(--brand-accent))]">PROFESIONALIZEM</p>
+          <h3 className="mt-2 font-serif text-3xl">Naš standard</h3>
+          <p className="prose prose-invert mt-4 max-w-prose whitespace-pre-line text-muted-foreground">{aboutQuotes.profesionalizem}</p>
+        </div>
+        <div>
+          <p className="text-xs uppercase tracking-[0.35em] text-[hsl(var(--brand-accent))]">HEDONIZEM</p>
+          <h3 className="mt-2 font-serif text-3xl">Naša pot</h3>
+          <p className="prose prose-invert mt-4 max-w-prose whitespace-pre-line text-muted-foreground">{aboutQuotes.hedonizem}</p>
+
+          <div className="mt-8">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-left">Sestavine</AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground">Najboljši destilati, sveži sokovi in butične bitters – skrbno izbrani za vsako pijačo.</AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="text-left">Tehnike</AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground">Clarity, fat-washing in cold brew infuzije za globino okusa in kristalno čiste koktajle.</AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="text-left">Ekipa</AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground">Kolektiv z desetletnimi izkušnjami in obsedenostjo z detajli – vsak večer, vsak kozarec.</AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function Gallery() {
+  return (
+    <Section id="gallery" className="py-20">
+      <h2 className="mb-8 font-serif text-3xl">Galerija</h2>
+      <Carousel className="w-full">
+        <CarouselContent>
+          {galleryImages.map((img) => (
+            <CarouselItem key={img.id} className="basis-full md:basis-1/2 lg:basis-1/3">
+              <div className="glass overflow-hidden rounded-xl">
+                <img src={img.url} alt={img.alt} className="h-64 w-full object-cover" />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="-left-3 border-white/20 bg-black/40 hover:bg-black/60" />
+        <CarouselNext className="-right-3 border-white/20 bg-black/40 hover:bg-black/60" />
+      </Carousel>
+    </Section>
+  );
+}
+
+function CTA() {
+  return (
+    <Section className="py-12">
+      <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-white/5 to-white/0 p-8">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(600px_200px_at_30%_-20%,rgba(244,206,144,.25),transparent)]" />
+        <div className="grid items-center gap-6 md:grid-cols-2">
+          <div>
+            <h3 className="font-serif text-3xl">Pripravljeni na izkušnjo?</h3>
+            <p className="mt-2 max-w-prose text-sm text-muted-foreground">Pišite nam in pripravili bomo mizo ali tasting, ki vam bo sedel kot ulit.</p>
+          </div>
+          <div className="text-right">
+            <a href="#contact">
+              <Button size="lg" className="bg-primary px-8 text-black hover:brightness-110">Kontakt</Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function Contact() {
+  const { toast } = useToast();
+  const { register, handleSubmit, reset } = useForm();
+
+  function onSubmit(data) {
+    try {
+      const existing = JSON.parse(localStorage.getItem("piranha_inquiries") || "[]");
+      const payload = { ...data, createdAt: new Date().toISOString() };
+      localStorage.setItem("piranha_inquiries", JSON.stringify([payload, ...existing].slice(0, 50)));
+      toast({ title: "Hvala!", description: "Sporočilo je shranjeno. Odgovorili vam bomo kmalu.", duration: 3500 });
+      reset();
+    } catch (e) {
+      toast({ title: "Napaka", description: "Poskusite znova.", duration: 3500 });
+    }
+  }
+
+  return (
+    <Section id="contact" className="py-24">
+      <div className="grid gap-10 md:grid-cols-2">
+        <div>
+          <h2 className="font-serif text-3xl">Kontakt</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Za rezervacije, dogodke ali degustacije nas kontaktirajte. Odgovorimo hitro.</p>
+
+          <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> Rezervacije miz in skupin</li>
+            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> Privatni eventi in pop-upi</li>
+            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> Tasting meniji po meri</li>
+          </ul>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="glass rounded-2xl p-6">
+          <div className="grid gap-4">
+            <div>
+              <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Ime in priimek</label>
+              <Input required placeholder="Vaše ime" className="bg-black/40" {...register("name", { required: true })} />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Email</label>
+                <Input type="email" required placeholder="vi@example.com" className="bg-black/40" {...register("email", { required: true })} />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Telefon</label>
+                <Input placeholder="Optional" className="bg-black/40" {...register("phone")} />
+              </div>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Sporočilo</label>
+              <Textarea rows={5} required placeholder="Kako vam lahko pomagamo?" className="resize-none bg-black/40" {...register("message", { required: true })} />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-muted-foreground">Z oddajo soglašate z našimi pogoji storitve.</p>
+              <Button type="submit" className="bg-primary text-black hover:brightness-110">Pošlji</Button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </Section>
+  );
+}
+
+function Hours() {
+  return (
+    <Section id="hours" className="py-20">
+      <div className="rounded-2xl border border-white/10 bg-black/40 p-6">
+        <h3 className="font-serif text-2xl">Delovni čas</h3>
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          {hours.map((h) => (
+            <div key={h.day} className="flex items-center justify-between rounded-lg border border-white/5 bg-black/30 px-4 py-3">
+              <span className="text-sm text-muted-foreground">{h.day}</span>
+              <span className="text-sm">{h.time}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Section>
+  );
+}

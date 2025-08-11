@@ -5,30 +5,6 @@
 @tailwind utilities;
 
 :root {
-  --background: 45 25% 96%;
-  --foreground: 24 10% 12%;
-  --card: 0 0% 100%;
-  --card-foreground: 24 10% 12%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 24 10% 12%;
-  --primary: 37 82% 76%;
-  --primary-foreground: 0 0% 5%;
-  --secondary: 45 20% 92%;
-  --secondary-foreground: 24 10% 12%;
-  --muted: 45 10% 88%;
-  --muted-foreground: 24 6% 40%;
-  --accent: 45 16% 92%;
-  --accent-foreground: 24 10% 12%;
-  --destructive: 0 73% 45%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 45 12% 86%;
-  --input: 45 12% 86%;
-  --ring: 37 82% 40%;
-  --brand-accent: 188 85% 29%;
-  --radius: 0.75rem;
-}
-
-.dark {
   --background: 0 0% 0%;
   --foreground: 0 0% 98%;
   --card: 0 0% 6%;
@@ -52,6 +28,8 @@
   --radius: 0.75rem;
 }
 
+
+
 @layer base {
   * { @apply border-border; }
   html { scroll-behavior: smooth; }
@@ -61,7 +39,7 @@
 }
 
 @layer components {
-  .glass { @apply bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-black/10 dark:border-white/10; }
+  .glass { @apply bg-white/5 backdrop-blur-xl border border-white/10; }
 }
 
 /* Auto-scrolling Gallery */

@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
 import { galleryImages } from "../mock";
 import useGsapAnimations from "../hooks/useGsapAnimations";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
+
 import ImageLightbox from "../components/ImageLightbox";
+import { getImageUrl } from "../utils/images";
 
 export default function GalleryPage() {
   useGsapAnimations();
@@ -51,7 +51,7 @@ export default function GalleryPage() {
                 style={{ width: `${100 / 12}%` }}
               >
                 <img 
-                  src={img.url} 
+                  src={getImageUrl(img.localPath, img.fallbackUrl)} 
                   alt={img.alt} 
                   className="h-[460px] w-full rounded-xl object-cover cursor-pointer hover:brightness-110 transition-all duration-300" 
                   onClick={() => openLightbox(index % 6)}
@@ -74,7 +74,7 @@ export default function GalleryPage() {
         {galleryImages.map((img, index) => (
           <div key={img.id} className="reveal-card mb-4 break-inside-avoid">
             <img 
-              src={img.url} 
+              src={getImageUrl(img.localPath, img.fallbackUrl)} 
               alt={img.alt} 
               className="w-full rounded-xl border border-white/10 cursor-pointer hover:brightness-110 hover:scale-[1.02] transition-all duration-300" 
               onClick={() => openLightbox(index)}

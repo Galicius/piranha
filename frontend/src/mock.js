@@ -1,120 +1,227 @@
 export const brand = {
   name: "Piranha",
   tagline: "Cocktail Bureau",
+  message: "Dobrodošli v",
   primaryHex: "#f4ce90",
   accentHex: "#0B788A",
 };
 
+import { getImageUrl } from './utils/images';
+
 export const galleryImages = [
-  // Premium, moody cocktail images curated by vision agent - optimized URLs
+  // Your actual cocktail images with proper names and categories
   {
-    id: "u-1621873495884",
-    url: "https://images.unsplash.com/photo-1621873495884-845a939892d1?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
-    alt: "Smoky whiskey cocktail on dark background",
+    id: "minty-cocktail",
+    localPath: "cocktails/minty-cocktail.jpg",
+    alt: "Minty cocktail with fresh herbs",
   },
   {
-    id: "u-1655546836727",
-    url: "https://images.unsplash.com/photo-1655546836727-bec4387b02e2?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
-    alt: "Garnished cocktail with orange peel",
+    id: "highball-collins", 
+    localPath: "cocktails/highball-collins.jpg",
+    alt: "Highball Collins cocktail",
   },
   {
-    id: "u-1615887023516",
-    url: "https://images.unsplash.com/photo-1615887023516-9b6bcd559e87?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
-    alt: "Elegant coupe glass with deep amber drink",
+    id: "tropical-sour",
+    localPath: "cocktails/tropical-sour.jpg", 
+    alt: "Tropical sour cocktail",
   },
   {
-    id: "p-2575697",
-    url: "https://images.pexels.com/photos/2575697/pexels-photo-2575697.jpeg?w=800&h=600&fit=crop&auto=compress&cs=tinysrgb",
-    alt: "Neon-lit cocktail with mint on black",
+    id: "spirit-forward-cocktail",
+    localPath: "cocktails/spirit-forward-cocktail.jpg",
+    alt: "Spirit-forward cocktail",
   },
   {
-    id: "p-2860686",
-    url: "https://images.pexels.com/photos/2860686/pexels-photo-2860686.jpeg?w=800&h=600&fit=crop&auto=compress&cs=tinysrgb",
-    alt: "Classic cocktail with ice on black table",
+    id: "martini-cosmo",
+    localPath: "cocktails/martini-cosmo.jpg",
+    alt: "Martini or Cosmopolitan style cocktail",
   },
   {
-    id: "u-1597241693839",
-    url: "https://images.unsplash.com/photo-1597241693839-07d7fb803af1?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
-    alt: "Pouring drink with dramatic splash",
+    id: "old-fashioned",
+    localPath: "cocktails/old-fashioned.jpg",
+    alt: "Classic Old Fashioned cocktail",
   },
   {
-    id: "u-1617721042693",
-    url: "https://images.unsplash.com/photo-1617721042693-0812f6d26d44?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
-    alt: "Two moody cocktails with citrus garnish",
+    id: "whiskey-sour",
+    localPath: "cocktails/whiskey-sour.jpg",
+    alt: "Whiskey Sour cocktail",
   },
   {
-    id: "u-1611031961555",
-    url: "https://images.unsplash.com/photo-1611031961555-9b9ad46f6b73?crop=entropy&cs=srgb&fm=webp&q=80&w=800",
-    alt: "Minimal black cocktail with smoke",
+    id: "neat-pour-rocks",
+    localPath: "cocktails/neat-pour-rocks.jpg",
+    alt: "Neat pour or on the rocks cocktail",
+  },
+  {
+    id: "process-shot-1",
+    localPath: "gallery/process/IMG_7655.JPG",
+    alt: "Cocktail making process",
+  },
+  {
+    id: "process-shot-2",
+    localPath: "gallery/process/IMG_7656.JPG",
+    alt: "Behind the scenes cocktail preparation",
+  },
+  {
+    id: "process-shot-3",
+    localPath: "gallery/process/IMG_7660.JPG",
+    alt: "Professional cocktail crafting",
+  },
+  {
+    id: "process-shot-4",
+    localPath: "gallery/process/IMG_7810.JPG",
+    alt: "Cocktail preparation technique",
+  },
+  {
+    id: "process-shot-5",
+    localPath: "gallery/process/IMG_7833.JPG",
+    alt: "Final cocktail preparation step",
   },
 ];
 
 export const signatureCocktails = [
   {
     id: "sig-01",
-    name: "Black Gold Old Fashioned",
-    price: 14,
-    tags: ["bourbon", "demerara", "bitters"],
-    imageId: "u-1615887023516",
-    blurb:
-      "Naša interpretacija klasike – kremast dim, rahla sladkoba in zlata eleganca.",
+    name: "Piranha Old Fashioned",
+    price: 16,
+    tags: ["bourbon", "demerara", "house bitters"],
+    imageId: "old-fashioned", // References your actual image
+    blurb: "Naša interpretacija klasike – kremast dim, rahla sladkoba in zlata eleganca.",
   },
   {
-    id: "sig-02",
-    name: "Piranha Negroni",
-    price: 13,
-    tags: ["gin", "amaro", "citrus"],
-    imageId: "u-1655546836727",
-    blurb:
-      "Krepak in uravnotežen, z nežnim morskim pridihom naših botanicals.",
+    id: "sig-02", 
+    name: "Tropical Paradise Sour",
+    price: 14,
+    tags: ["rum", "passion fruit", "lime", "foam"],
+    imageId: "tropical-sour", // References your actual image
+    blurb: "Eksotična svežina z bogato peno – popoln pobeg v tropski raj.",
   },
   {
     id: "sig-03",
-    name: "Nocturne Sour",
+    name: "Emerald Highball",
     price: 12,
-    tags: ["mezcal", "limona", "pena"],
-    imageId: "p-2575697",
-    blurb:
-      "Dimna svežina s svilnato strukturo – ustvarjeno za pozne ure.",
+    tags: ["gin", "elderflower", "cucumber", "tonic"],
+    imageId: "highball-collins", // References your actual image
+    blurb: "Kristalno čist, izjemno osvežujoč – popoln za dolge poletne večere.",
   },
   {
     id: "sig-04",
-    name: "Amber Boulevardier",
-    price: 14,
-    tags: ["rye", "vermouth", "amaro"],
-    imageId: "u-1597241693839",
-    blurb: "Topel, razkošen in iskreno piten.",
+    name: "Midnight Martini",
+    price: 15,
+    tags: ["vodka", "dry vermouth", "olive brine"],
+    imageId: "martini-cosmo", // References your actual image
+    blurb: "Elegantna klasika z našim pridihom – čist, oster in nepozaben.",
   },
   {
     id: "sig-05",
-    name: "Emerald Highball",
-    price: 11,
-    tags: ["japonski whisky", "soda", "yuzu"],
-    imageId: "u-1617721042693",
-    blurb: "Kristalno čist, izjemno osvežujoč.",
+    name: "Garden Fresh Mojito",
+    price: 13,
+    tags: ["white rum", "fresh mint", "lime", "soda"],
+    imageId: "minty-cocktail", // References your actual image
+    blurb: "Sveža meta iz našega vrta, kubanski rum in popolna ravnovesje.",
   },
   {
     id: "sig-06",
-    name: "Velvet Espresso",
-    price: 12,
-    tags: ["espresso", "liker", "vanilija"],
-    imageId: "u-1611031961555",
-    blurb: "Bogata krema, natančna sladkoba, dolga čokoladna nota.",
+    name: "Smoky Whiskey Sour",
+    price: 14,
+    tags: ["bourbon", "lemon", "egg white", "smoke"],
+    imageId: "whiskey-sour", // References your actual image
+    blurb: "Dimna eleganca s svilnato peno – tradicionalna tehnika z moderno noto.",
   },
 ];
 
 export const hours = [
-  { day: "Pon – Čet", time: "17:00 – 23:00" },
-  { day: "Pet – Sob", time: "17:00 – 01:00" },
-  { day: "Ned", time: "Zaprto" },
+  { day: "Ponedeljek", time: "09:00 – 00:00", open: "09:00", close: "00:00" },
+  { day: "Torek", time: "09:00 – 00:00", open: "09:00", close: "00:00" },
+  { day: "Sreda", time: "09:00 – 00:00", open: "09:00", close: "00:00" },
+  { day: "Četrtek", time: "09:00 – 00:00", open: "09:00", close: "00:00" },
+  { day: "Petek", time: "09:00 – 02:00", open: "09:00", close: "02:00" },
+  { day: "Sobota", time: "09:00 – 02:00", open: "09:00", close: "02:00" },
+  { day: "Nedelja", time: "09:00 – 00:00", open: "09:00", close: "00:00" },
 ];
 
+// Helper function to check if currently open and get status
+export const getOpenStatus = () => {
+  const now = new Date();
+  const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const currentTime = now.getHours() * 60 + now.getMinutes(); // Current time in minutes
+  
+  // Map JavaScript day numbers to our hours array indices
+  const dayMap = [6, 0, 1, 2, 3, 4, 5]; // Sunday=6, Monday=0, etc.
+  const todayIndex = dayMap[currentDay];
+  const todayHours = hours[todayIndex];
+  
+  // Parse opening and closing times
+  const [openHour, openMin] = todayHours.open.split(':').map(Number);
+  const [closeHour, closeMin] = todayHours.close.split(':').map(Number);
+  
+  const openTime = openHour * 60 + openMin;
+  let closeTime = closeHour * 60 + closeMin;
+  
+  // Handle closing times after midnight (like 02:00)
+  if (closeTime < openTime) {
+    closeTime += 24 * 60; // Add 24 hours
+  }
+  
+  let adjustedCurrentTime = currentTime;
+  // If current time is early morning and we close after midnight, adjust current time
+  if (currentTime < 12 * 60 && closeTime > 24 * 60) {
+    adjustedCurrentTime += 24 * 60;
+  }
+  
+  const isOpen = adjustedCurrentTime >= openTime && adjustedCurrentTime < closeTime;
+  
+  if (isOpen) {
+    // Calculate time until closing
+    const minutesUntilClose = closeTime - adjustedCurrentTime;
+    const hoursUntilClose = Math.floor(minutesUntilClose / 60);
+    const minsUntilClose = minutesUntilClose % 60;
+    
+    let timeUntilClose;
+    if (hoursUntilClose > 0) {
+      timeUntilClose = `${hoursUntilClose}h ${minsUntilClose}min`;
+    } else {
+      timeUntilClose = `${minsUntilClose}min`;
+    }
+    
+    return {
+      isOpen: true,
+      status: "Odprto",
+      timeInfo: `Zapremo čez ${timeUntilClose}`,
+      nextChange: `Zapremo ob ${todayHours.close}`
+    };
+  } else {
+    // Find next opening time
+    let nextOpenDay = todayIndex;
+    let nextOpenTime = openTime;
+    
+    // If we haven't opened today yet
+    if (currentTime < openTime) {
+      nextOpenTime = openTime;
+    } else {
+      // Look for next day we're open
+      nextOpenDay = (todayIndex + 1) % 7;
+      nextOpenTime = hours[nextOpenDay].open.split(':').map(Number);
+      nextOpenTime = nextOpenTime[0] * 60 + nextOpenTime[1];
+    }
+    
+    const nextDayName = hours[nextOpenDay].day;
+    const nextOpenTimeStr = hours[nextOpenDay].open;
+    
+    return {
+      isOpen: false,
+      status: "Zaprto",
+      timeInfo: `Odpremo ${nextOpenDay === todayIndex ? 'danes' : nextDayName.toLowerCase()} ob ${nextOpenTimeStr}`,
+      nextChange: `Odpremo ob ${nextOpenTimeStr}`
+    };
+  }
+};
+
 export const address = {
-  line1: "Cesta Hedonistov 9",
-  city: "Ljubljana",
-  phone: "+386 40 123 456",
+  line1: "Vojašniška ulica 4",
+  city: "2000 Maribor",
+  phone: "041 429 185",
   email: "hello@piranha.bar",
-  map: "https://maps.google.com/?q=Ljubljana",
+  instagram: "@piranhacocktailbureau",
+  map: "https://maps.google.com/?q=Vojašniška+ulica+4,+2000+Maribor",
 };
 
 export const aboutQuotes = {
@@ -124,5 +231,11 @@ export const aboutQuotes = {
     "Vabljeni k okušanju zbirke koktajlov, ki vas bodo popeljali na uživaško potovanje skozi desetletno zgodovino, z vznemirljivim ciljem … nekje v prihodnosti. Vkrcajte se!",
 };
 
-// Helper to resolve image by id
-export const imageById = (id) => galleryImages.find((g) => g.id === id)?.url;
+// Helper to resolve image by id - local images only
+export const imageById = (id) => {
+  const image = galleryImages.find((g) => g.id === id);
+  if (!image) return null;
+  
+  // Use only local images
+  return getImageUrl(image.localPath);
+};

@@ -1,14 +1,16 @@
 import React, { useMemo, useState, useCallback } from "react";
-import { signatureCocktails, imageById } from "../mock";
+import { signatureCocktails, imageById, galleryImages } from "../mock";
 import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
 import useGsapAnimations from "../hooks/useGsapAnimations";
+import ImageLightbox from "../components/ImageLightbox";
 
 export default function CocktailsPage() {
   useGsapAnimations();
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState("all");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentCocktailIndex, setCurrentCocktailIndex] = useState(0);
 
   const tags = useMemo(() => {
     const set = new Set();
@@ -35,6 +37,40 @@ export default function CocktailsPage() {
   const handleTagChange = useCallback((newTag) => {
     setTag(newTag);
   }, []);
+
+  const openLightbox = useCallback((cocktailId) => {
+    const index = signatureCocktails.findIndex(c => c.id === cocktailId);
+    setCurrentCocktailIndex(index);
+    setLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false);
+  }, []);
+
+  const goToPrevious = useCallback(() => {
+    setCurrentCocktailIndex((prev) => 
+      prev === 0 ? signatureCocktails.length - 1 : prev - 1
+    );
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setCurrentCocktailIndex((prev) => 
+      prev === signatureCocktails.length - 1 ? 0 : prev + 1
+    );
+  }, []);
+
+  // Transform cocktails data for lightbox
+  const cocktailsForLightbox = signatureCocktails.map(c => ({
+    id: c.id,
+    localPath: galleryImages.find(img => img.id === c.imageId)?.localPath,
+    fallbackUrl: galleryImages.find(img => img.id === c.imageId)?.fallbackUrl,
+    alt: c.name,
+    name: c.name,
+    price: c.price,
+    blurb: c.blurb,
+    tags: c.tags
+  }));
 
   return (
     <section className="py-16">
@@ -65,9 +101,10 @@ export default function CocktailsPage() {
             <img 
               src={imageById(c.imageId)} 
               alt={c.name} 
-              className="h-60 w-full object-cover" 
+              className="h-60 w-full object-cover cursor-pointer hover:brightness-110 transition-all duration-300" 
               loading={index < 6 ? "eager" : "lazy"}
               decoding="async"
+              onClick={() => openLightbox(c.id)}
             />
             <CardContent className="space-y-2 p-5">
               <div className="flex items-center justify-between">
@@ -83,6 +120,16 @@ export default function CocktailsPage() {
           </Card>
         ))}
       </div>
+
+      {/* Cocktail Lightbox */}
+      <ImageLightbox
+        isOpen={lightboxOpen}
+        onClose={closeLightbox}
+        images={cocktailsForLightbox}
+        currentIndex={currentCocktailIndex}
+        onPrevious={goToPrevious}
+        onNext={goToNext}
+      />
     </section>
   );
 }

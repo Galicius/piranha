@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
-import { cn } from "../lib/utils";
-import { Menu, X, Instagram, Phone, MapPin, Sun, Moon } from "lucide-react";
-import { brand } from "../mock";
-import { Switch } from "../components/ui/switch";
-import { useTheme } from "next-themes";
+
+import { Menu, X, Instagram, Phone, MapPin } from "lucide-react";
+import { brand, address } from "../mock";
+
 import { Link, useLocation } from "react-router-dom";
 import RippleBackground from "./RippleBackground";
 
-function clsx(...args) {
-  return args.filter(Boolean).join(" ");
-}
+
 
 export default function Layout({ children }) {
   const [open, setOpen] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
   const location = useLocation();
 
   // Handle hash scrolling when location changes
@@ -37,12 +33,12 @@ export default function Layout({ children }) {
       className: "text-sm tracking-wide text-muted-foreground hover:text-primary transition-colors",
       onClick: () => setOpen(false),
     };
-    
+
     // Handle hash links that should navigate to home page first
     if (to && to.startsWith('/#')) {
       return (
-        <Link 
-          to={to} 
+        <Link
+          to={to}
           {...props}
           onClick={(e) => {
             setOpen(false);
@@ -64,7 +60,7 @@ export default function Layout({ children }) {
         </Link>
       );
     }
-    
+
     return isRoute ? (
       <Link to={to} {...props}>{children}</Link>
     ) : (
@@ -76,7 +72,7 @@ export default function Layout({ children }) {
     <div className="min-h-screen bg-background text-foreground">
       {/* Ripple Background Effect */}
       <RippleBackground />
-      
+
       {/* Header */}
       <header className="site-header fixed inset-x-0 top-0 z-50">
         <div className="content-container px-4">
@@ -95,22 +91,13 @@ export default function Layout({ children }) {
               <NavA to="/#about">O nas</NavA>
               <NavA to="/galerija">Galerija</NavA>
               <NavA to="/#hours">Delovni čas</NavA>
-              <div className="flex items-center gap-2">
-                <Sun size={16} className="text-muted-foreground" />
-                <Switch
-                  checked={resolvedTheme !== "dark"}
-                  onCheckedChange={(v) => setTheme(v ? "light" : "dark")}
-                  aria-label="Theme toggle"
-                />
-                <Moon size={16} className="text-muted-foreground" />
-              </div>
               <NavA to="/#contact">
                 <Button className="bg-primary text-black hover:brightness-110">Kontakt</Button>
               </NavA>
             </nav>
 
             <button
-              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-black/30 text-white/90 dark:bg-black/30"
+              className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 bg-black/30 text-white/90"
               onClick={() => setOpen((o) => !o)}
               aria-label="toggle menu"
             >
@@ -122,20 +109,8 @@ export default function Layout({ children }) {
         {/* Mobile menu */}
         {open && (
           <div className="content-container px-4">
-            <div className="mt-2 rounded-xl border border-white/10 bg-black/60 p-4 backdrop-blur-xl md:hidden dark:bg-black/60">
+            <div className="mt-2 rounded-xl border border-white/10 bg-black/60 p-4 backdrop-blur-xl md:hidden">
               <div className="grid gap-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Light mode</span>
-                  <div className="flex items-center gap-2">
-                    <Sun size={14} className="text-muted-foreground" />
-                    <Switch
-                      checked={resolvedTheme !== "dark"}
-                      onCheckedChange={(v) => setTheme(v ? "light" : "dark")}
-                      aria-label="Theme toggle"
-                    />
-                    <Moon size={14} className="text-muted-foreground" />
-                  </div>
-                </div>
                 <NavA to="/cocktajli">Meni</NavA>
                 <NavA to="/#about">O nas</NavA>
                 <NavA to="/galerija">Galerija</NavA>
@@ -150,7 +125,7 @@ export default function Layout({ children }) {
       </header>
 
       {/* Scroll-only gradient veil */}
-      <div id="scroll-veil" className="pointer-events-none fixed inset-0 z-10 opacity-0" style={{background:"radial-gradient(800px 300px at 20% -10%, rgba(244,206,144,0.06), transparent), radial-gradient(800px 300px at 80% -10%, rgba(11,120,138,0.04), transparent)"}} />
+      <div id="scroll-veil" className="pointer-events-none fixed inset-0 z-10 opacity-0" style={{ background: "radial-gradient(800px 300px at 20% -10%, rgba(244,206,144,0.06), transparent), radial-gradient(800px 300px at 80% -10%, rgba(11,120,138,0.04), transparent)" }} />
 
       <main id="top" className="pt-24">
         <div className="content-container px-4">
@@ -171,9 +146,37 @@ export default function Layout({ children }) {
             </div>
 
             <div className="text-sm text-muted-foreground">
-              <div className="mb-2 flex items-center gap-2"><Phone size={14} className="text-primary"/> <span>+386 40 123 456</span></div>
-              <div className="mb-2 flex items-center gap-2"><MapPin size={14} className="text-primary"/> <span>Ljubljana</span></div>
-              <div className="mb-2 flex items-center gap-2"><Instagram size={14} className="text-primary"/> <span>@piranha.cocktails</span></div>
+              <div className="mb-2 flex items-center gap-2">
+                <Phone size={14} className="text-primary" />
+                <a
+                  href={`tel:${address.phone.replace(/\s/g, '')}`}
+                  className="text-primary hover:brightness-110 transition-colors"
+                >
+                  {address.phone}
+                </a>
+              </div>
+              <div className="mb-2 flex items-center gap-2">
+                <MapPin size={14} className="text-primary" />
+                <a
+                  href={address.map}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:brightness-110 transition-colors"
+                >
+                  {address.line1}, {address.city}
+                </a>
+              </div>
+              <div className="mb-2 flex items-center gap-2">
+                <Instagram size={14} className="text-primary" />
+                <a
+                  href={`https://instagram.com/${address.instagram.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:brightness-110 transition-colors"
+                >
+                  {address.instagram}
+                </a>
+              </div>
             </div>
 
             <div className="text-right md:text-left">

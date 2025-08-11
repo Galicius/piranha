@@ -9,6 +9,7 @@ import { useToast } from "../hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { brand, galleryImages, signatureCocktails, imageById, aboutQuotes, hours } from "../mock";
 import { CheckCircle2 } from "lucide-react";
+import useGsapAnimations from "../hooks/useGsapAnimations";
 
 function Section({ id, children, className = "" }) {
   return (
@@ -17,6 +18,7 @@ function Section({ id, children, className = "" }) {
 }
 
 export default function Landing() {
+  useGsapAnimations();
   return (
     <div>
       <Hero />
@@ -33,12 +35,10 @@ export default function Landing() {
 function Hero() {
   return (
     <div className="relative overflow-hidden">
-      {/* subtle top glow */}
-      <div className="pointer-events-none absolute inset-x-0 -top-32 z-0 h-72 bg-gradient-to-b from-white/10 to-transparent blur-2xl" />
+      <div className="pointer-events-none absolute inset-x-0 -top-32 z-0 h-72 bg-gradient-to-b from-white/10 to-transparent blur-2xl dark:from-white/10" />
 
       <Section className="flex flex-col items-center gap-12 pb-20 pt-16 md:flex-row md:items-end md:gap-16 md:pb-28 md:pt-24">
-        {/* Left copy */}
-        <div className="relative z-10 max-w-xl">
+        <div className="relative z-10 max-w-xl" data-anim="fade-up">
           <p className="text-xs uppercase tracking-[0.35em] text-[hsl(var(--brand-accent))]">{brand.tagline}</p>
           <h1 className="mt-3 font-serif text-5xl leading-[1.1] md:text-6xl">
             {brand.name} <span className="text-primary">Cocktail</span> Bureau
@@ -56,8 +56,7 @@ function Hero() {
           </div>
         </div>
 
-        {/* Right media carousel */}
-        <div className="relative z-10 w-full max-w-xl md:max-w-2xl">
+        <div className="relative z-10 w-full max-w-xl md:max-w-2xl parallax-y" data-anim="fade-up">
           <div className="glass rounded-2xl p-3">
             <Carousel className="w-full">
               <CarouselContent>
@@ -82,7 +81,7 @@ function Hero() {
 function SignatureMenu() {
   return (
     <Section id="menu" className="py-20">
-      <div className="mb-10 flex items-end justify-between">
+      <div className="mb-10 flex items-end justify-between" data-anim="fade-up">
         <div>
           <h2 className="font-serif text-3xl md:text-4xl">Signature koktajli</h2>
           <p className="mt-2 text-sm text-muted-foreground">Najbolj priljubljene kreacije hiše Piranha.</p>
@@ -92,9 +91,9 @@ function SignatureMenu() {
         </a>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="reveal-grid grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {signatureCocktails.map((c) => (
-          <Card key={c.id} className="group relative overflow-hidden border-white/10 bg-black/40">
+          <Card key={c.id} className="reveal-card group relative overflow-hidden border-white/10 bg-black/40 dark:bg-black/40">
             <div className="overflow-hidden">
               <img src={imageById(c.imageId)} alt={c.name} className="h-56 w-full object-cover transition-[filter] duration-500 group-hover:brightness-110" />
             </div>
@@ -121,17 +120,17 @@ function About() {
   return (
     <Section id="about" className="py-24">
       <div className="grid items-start gap-12 md:grid-cols-2">
-        <div>
+        <div data-anim="fade-up">
           <p className="text-xs uppercase tracking-[0.35em] text-[hsl(var(--brand-accent))]">PROFESIONALIZEM</p>
           <h3 className="mt-2 font-serif text-3xl">Naš standard</h3>
           <p className="prose prose-invert mt-4 max-w-prose whitespace-pre-line text-muted-foreground">{aboutQuotes.profesionalizem}</p>
         </div>
-        <div>
+        <div data-anim="fade-up">
           <p className="text-xs uppercase tracking-[0.35em] text-[hsl(var(--brand-accent))]">HEDONIZEM</p>
           <h3 className="mt-2 font-serif text-3xl">Naša pot</h3>
           <p className="prose prose-invert mt-4 max-w-prose whitespace-pre-line text-muted-foreground">{aboutQuotes.hedonizem}</p>
 
-          <div className="mt-8">
+          <div className="mt-8" data-anim="fade-up">
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
                 <AccordionTrigger className="text-left">Sestavine</AccordionTrigger>
@@ -156,8 +155,8 @@ function About() {
 function Gallery() {
   return (
     <Section id="gallery" className="py-20">
-      <h2 className="mb-8 font-serif text-3xl">Galerija</h2>
-      <Carousel className="w-full">
+      <h2 className="mb-8 font-serif text-3xl" data-anim="fade-up">Galerija</h2>
+      <Carousel className="w-full" data-anim="fade-up">
         <CarouselContent>
           {galleryImages.map((img) => (
             <CarouselItem key={img.id} className="basis-full md:basis-1/2 lg:basis-1/3">
@@ -177,7 +176,7 @@ function Gallery() {
 function CTA() {
   return (
     <Section className="py-12">
-      <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-white/5 to-white/0 p-8">
+      <div className="cta-reveal relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-white/5 to-white/0 p-8 dark:from-white/5">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(600px_200px_at_30%_-20%,rgba(244,206,144,.25),transparent)]" />
         <div className="grid items-center gap-6 md:grid-cols-2">
           <div>
@@ -214,7 +213,7 @@ function Contact() {
   return (
     <Section id="contact" className="py-24">
       <div className="grid gap-10 md:grid-cols-2">
-        <div>
+        <div data-anim="fade-up">
           <h2 className="font-serif text-3xl">Kontakt</h2>
           <p className="mt-2 text-sm text-muted-foreground">Za rezervacije, dogodke ali degustacije nas kontaktirajte. Odgovorimo hitro.</p>
 
@@ -225,25 +224,25 @@ function Contact() {
           </ul>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="glass rounded-2xl p-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="glass rounded-2xl p-6" data-anim="fade-up">
           <div className="grid gap-4">
             <div>
               <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Ime in priimek</label>
-              <Input required placeholder="Vaše ime" className="bg-black/40" {...register("name", { required: true })} />
+              <Input required placeholder="Vaše ime" className="bg-black/40 dark:bg-black/40" {...register("name", { required: true })} />
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Email</label>
-                <Input type="email" required placeholder="vi@example.com" className="bg-black/40" {...register("email", { required: true })} />
+                <Input type="email" required placeholder="vi@example.com" className="bg-black/40 dark:bg-black/40" {...register("email", { required: true })} />
               </div>
               <div>
                 <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Telefon</label>
-                <Input placeholder="Optional" className="bg-black/40" {...register("phone")} />
+                <Input placeholder="Optional" className="bg-black/40 dark:bg-black/40" {...register("phone")} />
               </div>
             </div>
             <div>
               <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Sporočilo</label>
-              <Textarea rows={5} required placeholder="Kako vam lahko pomagamo?" className="resize-none bg-black/40" {...register("message", { required: true })} />
+              <Textarea rows={5} required placeholder="Kako vam lahko pomagamo?" className="resize-none bg-black/40 dark:bg-black/40" {...register("message", { required: true })} />
             </div>
 
             <div className="flex items-center justify-between">
@@ -259,12 +258,12 @@ function Contact() {
 
 function Hours() {
   return (
-    <Section id="hours" className="py-20">
-      <div className="rounded-2xl border border-white/10 bg-black/40 p-6">
+    <Section id="hours" className="py-20" data-anim="fade-up">
+      <div className="rounded-2xl border border-white/10 bg-black/40 p-6 dark:bg-black/40">
         <h3 className="font-serif text-2xl">Delovni čas</h3>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           {hours.map((h) => (
-            <div key={h.day} className="flex items-center justify-between rounded-lg border border-white/5 bg-black/30 px-4 py-3">
+            <div key={h.day} className="flex items-center justify-between rounded-lg border border-white/5 bg-black/30 px-4 py-3 dark:bg-black/30">
               <span className="text-sm text-muted-foreground">{h.day}</span>
               <span className="text-sm">{h.time}</span>
             </div>

@@ -4,15 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LIGHT THEME (default) */
 :root {
-  --background: 45 25% 96%; /* warm off-white */
+  --background: 45 25% 96%;
   --foreground: 24 10% 12%;
   --card: 0 0% 100%;
   --card-foreground: 24 10% 12%;
   --popover: 0 0% 100%;
   --popover-foreground: 24 10% 12%;
-  --primary: 37 82% 76%; /* #f4ce90 */
+  --primary: 37 82% 76%;
   --primary-foreground: 0 0% 5%;
   --secondary: 45 20% 92%;
   --secondary-foreground: 24 10% 12%;
@@ -25,11 +24,10 @@
   --border: 45 12% 86%;
   --input: 45 12% 86%;
   --ring: 37 82% 40%;
-  --brand-accent: 188 85% 29%; /* #0B788A */
+  --brand-accent: 188 85% 29%;
   --radius: 0.75rem;
 }
 
-/* DARK THEME */
 .dark {
   --background: 0 0% 0%;
   --foreground: 0 0% 98%;
@@ -64,6 +62,11 @@
 
 @layer components {
   .glass { @apply bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-black/10 dark:border-white/10; }
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }

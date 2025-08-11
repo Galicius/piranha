@@ -29,7 +29,7 @@ export default function Layout({ children }) {
       {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50">
         <div className="mx-auto max-w-7xl px-4">
-          <div className="mt-4 flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-xl dark:bg-black/40 dark:border-white/10">
+          <div className="mt-4 flex items-center justify-between glass rounded-xl px-4 py-3">
             {/* Logo */}
             <a href="#top" className="flex items-center gap-3">
               <DiamondLogo />

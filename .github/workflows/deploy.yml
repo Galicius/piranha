@@ -3,8 +3,6 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -45,6 +43,13 @@ jobs:
         env:
           CI: false
           GENERATE_SOURCEMAP: false
+          
+      - name: List build contents (debug)
+        run: |
+          echo "Contents of frontend/build:"
+          ls -la frontend/build/
+          echo "Contents of frontend/build/static:"
+          ls -la frontend/build/static/ || echo "No static directory"
           
       - name: Setup Pages
         uses: actions/configure-pages@v4

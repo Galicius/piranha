@@ -39,7 +39,7 @@ export default function CocktailsPage() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16">
       <div className="site-top reveal-grid mb-8 grid items-end gap-4 sm:grid-cols-2" data-anim="fade-up">
-        <div>
+        <div data-anim="fade-up">
           <h1 className="font-serif text-4xl">Koktajli</h1>
           <p className="mt-2 text-sm text-muted-foreground">Prebrskajte naš izbor signature pijač.</p>
         </div>

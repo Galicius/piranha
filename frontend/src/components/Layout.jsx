@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { cn } from "../lib/utils";
 import { Menu, X, Instagram, Phone, MapPin, Sun, Moon } from "lucide-react";
 import { brand } from "../mock";
 import { Switch } from "../components/ui/switch";
 import { useTheme } from "next-themes";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function clsx(...args) {
   return args.filter(Boolean).join(" ");
@@ -14,6 +14,21 @@ function clsx(...args) {
 export default function Layout({ children }) {
   const [open, setOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
+  const location = useLocation();
+
+  // Handle hash scrolling when location changes
+  useEffect(() => {
+    if (location.hash) {
+      const sectionId = location.hash.substring(1); // Remove '#'
+      const element = document.getElementById(sectionId);
+      if (element) {
+        // Small delay to ensure the page has rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   const NavA = ({ to, href, children }) => {
     const isRoute = !!to;
@@ -21,6 +36,34 @@ export default function Layout({ children }) {
       className: "text-sm tracking-wide text-muted-foreground hover:text-primary transition-colors",
       onClick: () => setOpen(false),
     };
+    
+    // Handle hash links that should navigate to home page first
+    if (to && to.startsWith('/#')) {
+      return (
+        <Link 
+          to={to} 
+          {...props}
+          onClick={(e) => {
+            setOpen(false);
+            // If we're not on the home page, navigate there first
+            if (window.location.pathname !== '/') {
+              // Let React Router handle the navigation
+              return;
+            }
+            // If we're already on home page, just scroll to the section
+            e.preventDefault();
+            const sectionId = to.substring(2); // Remove '/#'
+            const element = document.getElementById(sectionId);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+        >
+          {children}
+        </Link>
+      );
+    }
+    
     return isRoute ? (
       <Link to={to} {...props}>{children}</Link>
     ) : (
@@ -35,19 +78,19 @@ export default function Layout({ children }) {
         <div className="mx-auto max-w-7xl px-4">
           <div className="mt-4 flex items-center justify-between glass rounded-xl px-4 py-3">
             {/* Logo */}
-            <a href="#top" className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
               <DiamondLogo />
               <div className="leading-none">
                 <div className="font-serif text-xl tracking-[0.2em] text-primary">{brand.name.toUpperCase()}</div>
                 <div className="text-[10px] uppercase tracking-[0.35em] text-muted-foreground">{brand.tagline}</div>
               </div>
-            </a>
+            </Link>
 
             <nav className="hidden items-center gap-6 md:flex">
               <NavA to="/cocktajli">Meni</NavA>
-              <NavA href="/#about">O nas</NavA>
+              <NavA to="/#about">O nas</NavA>
               <NavA to="/galerija">Galerija</NavA>
-              <NavA href="/#hours">Delovni čas</NavA>
+              <NavA to="/#hours">Delovni čas</NavA>
               <div className="flex items-center gap-2">
                 <Sun size={16} className="text-muted-foreground" />
                 <Switch
@@ -57,9 +100,9 @@ export default function Layout({ children }) {
                 />
                 <Moon size={16} className="text-muted-foreground" />
               </div>
-              <a href="#contact">
+              <NavA to="/#contact">
                 <Button className="bg-primary text-black hover:brightness-110">Kontakt</Button>
-              </a>
+              </NavA>
             </nav>
 
             <button
@@ -90,12 +133,12 @@ export default function Layout({ children }) {
                   </div>
                 </div>
                 <NavA to="/cocktajli">Meni</NavA>
-                <NavA href="/#about">O nas</NavA>
+                <NavA to="/#about">O nas</NavA>
                 <NavA to="/galerija">Galerija</NavA>
-                <NavA href="/#hours">Delovni čas</NavA>
-                <a href="#contact">
+                <NavA to="/#hours">Delovni čas</NavA>
+                <NavA to="/#contact">
                   <Button className="w-full bg-primary text-black hover:brightness-110">Kontakt</Button>
-                </a>
+                </NavA>
               </div>
             </div>
           </div>
@@ -126,9 +169,9 @@ export default function Layout({ children }) {
             </div>
 
             <div className="text-right md:text-left">
-              <a href="#contact">
+              <Link to="/#contact">
                 <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">Kontaktiraj nas</Button>
-              </a>
+              </Link>
             </div>
           </div>
           <p className="mt-8 text-xs text-muted-foreground/70">© {new Date().getFullYear()} Piranha Cocktail Bureau. Vse pravice pridržane.</p>

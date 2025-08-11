@@ -43,7 +43,7 @@ jobs:
         env:
           CI: false
           GENERATE_SOURCEMAP: false
-          PUBLIC_URL: https://galicius2.github.io
+          PUBLIC_URL: https://galicius2.github.io/piranha
           
       - name: List build contents (debug)
         run: |

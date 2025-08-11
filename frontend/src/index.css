@@ -64,10 +64,92 @@
   .glass { @apply bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-black/10 dark:border-white/10; }
 }
 
-/* Motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+/* Auto-scrolling Gallery */
+.auto-scroll-gallery {
+  animation: autoScroll 30s linear infinite;
 }
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
-.fade-up { animation: fadeUp 0.5s ease-out both; }
+.auto-scroll-gallery:hover {
+  animation-play-state: paused;
+}
+
+@keyframes autoScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Enhanced Background Gradient */
+body {
+  transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+/* Enhanced Animations */
+@keyframes fadeUp { 
+  from { 
+    opacity: 0; 
+    transform: translateY(30px) scale(0.95);
+  } 
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+  } 
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-up { animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.slide-in-left { animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.slide-in-right { animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * { 
+    animation: none !important; 
+    transition: none !important; 
+  }
+  .auto-scroll-gallery {
+    animation: none !important;
+  }
+  body {
+    transition: none !important;
+  }
+}

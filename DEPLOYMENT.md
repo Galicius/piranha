@@ -4,6 +4,7 @@
 - GitHub account
 - Your domain `piranha.si` configured with your domain registrar
 - Git installed on your computer
+- Node.js 20+ (for local development)
 
 ## Step 1: Create GitHub Repository
 1. Go to [GitHub.com](https://github.com) and create a new repository

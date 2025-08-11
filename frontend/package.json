@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "homepage": "https://piranha.si",
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

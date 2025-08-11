@@ -1,23 +1,17 @@
-# 🚀 Piranha Cocktail Bureau - GitHub Pages Deployment Guide
+# 🚀 Piranha Cocktail Bureau - GitHub Actions Deployment Guide
 
 ## Prerequisites
 - GitHub account
 - Your domain `piranha.si` configured with your domain registrar
 - Git installed on your computer
 
-## Step 1: Install GitHub Pages Package
-```bash
-cd frontend
-yarn add --dev gh-pages
-```
-
-## Step 2: Create GitHub Repository
+## Step 1: Create GitHub Repository
 1. Go to [GitHub.com](https://github.com) and create a new repository
 2. Name it something like `piranha-cocktail-bureau` or `piranha-website`
 3. Make it **public** (required for GitHub Pages on free accounts)
 4. Don't initialize with README (we already have files)
 
-## Step 3: Initialize Git and Push to GitHub
+## Step 2: Initialize Git and Push to GitHub
 ```bash
 # In your project root directory
 git init
@@ -28,24 +22,21 @@ git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
 git push -u origin main
 ```
 
-## Step 4: Deploy to GitHub Pages
-```bash
-cd frontend
-yarn deploy
-```
-
-This will:
-- Build your React app for production
-- Create a `gh-pages` branch
-- Deploy the built files to GitHub Pages
-
-## Step 5: Configure GitHub Pages Settings
+## Step 3: Configure GitHub Pages Settings
 1. Go to your GitHub repository
 2. Click **Settings** tab
 3. Scroll down to **Pages** section
-4. Under **Source**, select **Deploy from a branch**
-5. Select **gh-pages** branch and **/ (root)** folder
-6. Click **Save**
+4. Under **Source**, select **GitHub Actions**
+5. This enables the workflow we've created in `.github/workflows/deploy.yml`
+
+## Step 4: Automatic Deployment
+🎉 **That's it!** Your site will automatically deploy when you:
+- Push to the `main` branch
+- The GitHub Action will:
+  - Install dependencies
+  - Build your React app
+  - Deploy to GitHub Pages
+  - Update your live site at `piranha.si`
 
 ## Step 6: Configure Your Domain (piranha.si)
 
@@ -100,11 +91,12 @@ To update your website:
 git add .
 git commit -m "Update website content"
 git push origin main
-
-# Deploy the changes
-cd frontend
-yarn deploy
 ```
+
+**That's it!** GitHub Actions will automatically:
+- Build your updated React app
+- Deploy it to GitHub Pages
+- Your site at `piranha.si` will be updated within 2-3 minutes
 
 ## 🛠 Troubleshooting
 

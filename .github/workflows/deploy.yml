@@ -43,6 +43,7 @@ jobs:
         env:
           CI: false
           GENERATE_SOURCEMAP: false
+          PUBLIC_URL: https://piranha.si
           
       - name: List build contents (debug)
         run: |
@@ -50,6 +51,10 @@ jobs:
           ls -la frontend/build/
           echo "Contents of frontend/build/static:"
           ls -la frontend/build/static/ || echo "No static directory"
+          echo "Contents of index.html:"
+          head -20 frontend/build/index.html
+          echo "Looking for script tags:"
+          grep -n "script" frontend/build/index.html || echo "No script tags found"
           
       - name: Setup Pages
         uses: actions/configure-pages@v4

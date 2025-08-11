@@ -5,11 +5,13 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/ui/accordion";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import { useToast } from "../hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { brand, galleryImages, signatureCocktails, imageById, aboutQuotes, hours } from "../mock";
 import { CheckCircle2 } from "lucide-react";
 import useGsapAnimations from "../hooks/useGsapAnimations";
+import ThreeDiamond from "../components/ThreeDiamond";
 
 function Section({ id, children, className = "" }) {
   return (
@@ -35,10 +37,15 @@ export default function Landing() {
 function Hero() {
   return (
     <div className="relative overflow-hidden">
+      {/* subtle top glow */}
       <div className="pointer-events-none absolute inset-x-0 -top-32 z-0 h-72 bg-gradient-to-b from-white/10 to-transparent blur-2xl dark:from-white/10" />
 
       <Section className="flex flex-col items-center gap-12 pb-20 pt-16 md:flex-row md:items-end md:gap-16 md:pb-28 md:pt-24">
+        {/* Left copy */}
         <div className="relative z-10 max-w-xl" data-anim="fade-up">
+          <div className="pointer-events-none absolute -left-16 -top-14 hidden md:block opacity-70">
+            <ThreeDiamond className="h-28 w-28" intensity={0.8} />
+          </div>
           <p className="text-xs uppercase tracking-[0.35em] text-[hsl(var(--brand-accent))]">{brand.tagline}</p>
           <h1 className="mt-3 font-serif text-5xl leading-[1.1] md:text-6xl">
             {brand.name} <span className="text-primary">Cocktail</span> Bureau
@@ -56,9 +63,10 @@ function Hero() {
           </div>
         </div>
 
+        {/* Right media carousel */}
         <div className="relative z-10 w-full max-w-xl md:max-w-2xl parallax-y" data-anim="fade-up">
           <div className="glass rounded-2xl p-3">
-            <Carousel className="w-full">
+            <Carousel className="w-full" plugins={[Autoplay({ delay: 3200, stopOnMouseEnter: true, stopOnInteraction: false })]}>
               <CarouselContent>
                 {galleryImages.slice(0, 5).map((img) => (
                   <CarouselItem key={img.id} className="basis-full">
@@ -156,7 +164,7 @@ function Gallery() {
   return (
     <Section id="gallery" className="py-20">
       <h2 className="mb-8 font-serif text-3xl" data-anim="fade-up">Galerija</h2>
-      <Carousel className="w-full" data-anim="fade-up">
+      <Carousel className="w-full" data-anim="fade-up" plugins={[Autoplay({ delay: 3000, stopOnMouseEnter: true, stopOnInteraction: false })]}>
         <CarouselContent>
           {galleryImages.map((img) => (
             <CarouselItem key={img.id} className="basis-full md:basis-1/2 lg:basis-1/3">

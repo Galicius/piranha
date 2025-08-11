@@ -27,6 +27,8 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<Landing />} />
+              <Route path="/cocktajli" element={<CocktailsPage />} />
+              <Route path="/galerija" element={<GalleryPage />} />
             </Routes>
           </Layout>
         </BrowserRouter>

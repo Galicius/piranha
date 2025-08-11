@@ -6,6 +6,7 @@ import { brand } from "../mock";
 import { Switch } from "../components/ui/switch";
 import { useTheme } from "next-themes";
 import { Link, useLocation } from "react-router-dom";
+import RippleBackground from "./RippleBackground";
 
 function clsx(...args) {
   return args.filter(Boolean).join(" ");
@@ -73,9 +74,12 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Ripple Background Effect */}
+      <RippleBackground />
+      
       {/* Header */}
       <header className="site-header fixed inset-x-0 top-0 z-50">
-        <div className="mx-auto max-w-7xl px-4">
+        <div className="content-container px-4">
           <div className="mt-4 flex items-center justify-between glass rounded-xl px-4 py-3">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3">
@@ -117,7 +121,7 @@ export default function Layout({ children }) {
 
         {/* Mobile menu */}
         {open && (
-          <div className="mx-auto max-w-7xl px-4">
+          <div className="content-container px-4">
             <div className="mt-2 rounded-xl border border-white/10 bg-black/60 p-4 backdrop-blur-xl md:hidden dark:bg-black/60">
               <div className="grid gap-3">
                 <div className="flex items-center justify-between">
@@ -148,11 +152,15 @@ export default function Layout({ children }) {
       {/* Scroll-only gradient veil */}
       <div id="scroll-veil" className="pointer-events-none fixed inset-0 z-10 opacity-0" style={{background:"radial-gradient(800px 300px at 20% -10%, rgba(244,206,144,0.06), transparent), radial-gradient(800px 300px at 80% -10%, rgba(11,120,138,0.04), transparent)"}} />
 
-      <main id="top" className="pt-24">{children}</main>
+      <main id="top" className="pt-24">
+        <div className="content-container px-4">
+          {children}
+        </div>
+      </main>
 
       {/* Footer */}
       <footer className="mt-24 border-t border-white/10/ bg-black/60 dark:bg-black/60">
-        <div className="mx-auto max-w-7xl px-4 py-12">
+        <div className="content-container px-4 py-12">
           <div className="grid gap-10 md:grid-cols-3">
             <div className="flex items-center gap-3">
               <DiamondLogo />

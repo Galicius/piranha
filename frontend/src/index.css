@@ -78,10 +78,59 @@
   100% { transform: translateX(-50%); }
 }
 
-/* Enhanced Background Gradient */
+/* Enhanced Background with Ripple Effect */
 body {
   transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   background: linear-gradient(135deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Gold Ripple Effect */
+.ripple-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 40%, transparent 70%);
+  transform: scale(0);
+  animation: rippleEffect 4s ease-out infinite;
+}
+
+.ripple:nth-child(1) { animation-delay: 0s; }
+.ripple:nth-child(2) { animation-delay: 1.3s; }
+.ripple:nth-child(3) { animation-delay: 2.6s; }
+.ripple:nth-child(4) { animation-delay: 3.9s; }
+
+@keyframes rippleEffect {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Content Container Constraint */
+.content-container {
+  max-width: 1280px; /* Same as navbar max-width */
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
 }
 
 /* Enhanced Animations */
@@ -140,6 +189,35 @@ body {
   background: hsl(var(--primary) / 0.8);
 }
 
+/* Interactive Ripple on Click */
+.click-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.08) 50%, transparent 70%);
+  transform: scale(0);
+  animation: clickRipple 0.8s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes clickRipple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Enhanced Content Container */
+.content-container {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(1px);
+  border-radius: 0;
+}
+
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   * { 
@@ -148,6 +226,14 @@ body {
   }
   .auto-scroll-gallery {
     animation: none !important;
+  }
+  .ripple {
+    animation: none !important;
+    display: none;
+  }
+  .click-ripple {
+    animation: none !important;
+    display: none;
   }
   body {
     transition: none !important;

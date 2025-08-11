@@ -12,7 +12,7 @@ function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <div className="min-h-screen bg-background font-sans">
-        <BrowserRouter basename="/piranha">
+        <BrowserRouter>
           <Layout>
             <Routes>
               <Route path="/" element={<Landing />} />

@@ -16,7 +16,7 @@ import ImageLightbox from "../components/ImageLightbox";
 
 function Section({ id, children, className = "" }) {
   return (
-    <section id={id} className={`relative mx-auto max-w-7xl px-4 ${className}`}>{children}</section>
+    <section id={id} className={`relative ${className}`}>{children}</section>
   );
 }
 

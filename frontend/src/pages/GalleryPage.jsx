@@ -33,7 +33,7 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16">
+    <section className="py-16">
       <div data-anim="fade-up" className="mb-8">
         <h1 className="font-serif text-4xl">Galerija</h1>
         <p className="mt-2 text-sm text-muted-foreground">Izbrani trenutki – moody fotografija in detajli naših pijač.</p>

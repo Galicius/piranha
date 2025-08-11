@@ -5,6 +5,7 @@ import { Menu, X, Instagram, Phone, MapPin, Sun, Moon } from "lucide-react";
 import { brand } from "../mock";
 import { Switch } from "../components/ui/switch";
 import { useTheme } from "next-themes";
+import { Link } from "react-router-dom";
 
 function clsx(...args) {
   return args.filter(Boolean).join(" ");
@@ -14,20 +15,23 @@ export default function Layout({ children }) {
   const [open, setOpen] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
-  const NavLink = ({ href, children }) => (
-    <a
-      href={href}
-      className="text-sm tracking-wide text-muted-foreground hover:text-primary transition-colors"
-      onClick={() => setOpen(false)}
-    >
-      {children}
-    </a>
-  );
+  const NavA = ({ to, href, children }) => {
+    const isRoute = !!to;
+    const props = {
+      className: "text-sm tracking-wide text-muted-foreground hover:text-primary transition-colors",
+      onClick: () => setOpen(false),
+    };
+    return isRoute ? (
+      <Link to={to} {...props}>{children}</Link>
+    ) : (
+      <a href={href} {...props}>{children}</a>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <header className="fixed inset-x-0 top-0 z-50">
+      <header className="site-header fixed inset-x-0 top-0 z-50">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mt-4 flex items-center justify-between glass rounded-xl px-4 py-3">
             {/* Logo */}
@@ -40,11 +44,10 @@ export default function Layout({ children }) {
             </a>
 
             <nav className="hidden items-center gap-6 md:flex">
-              <NavLink href="#menu">Meni</NavLink>
-              <NavLink href="#about">O nas</NavLink>
-              <NavLink href="#gallery">Galerija</NavLink>
-              <NavLink href="#hours">Delovni čas</NavLink>
-              {/* Theme toggle */}
+              <NavA to="/cocktajli">Meni</NavA>
+              <NavA href="/#about">O nas</NavA>
+              <NavA to="/galerija">Galerija</NavA>
+              <NavA href="/#hours">Delovni čas</NavA>
               <div className="flex items-center gap-2">
                 <Sun size={16} className="text-muted-foreground" />
                 <Switch
@@ -86,10 +89,10 @@ export default function Layout({ children }) {
                     <Moon size={14} className="text-muted-foreground" />
                   </div>
                 </div>
-                <NavLink href="#menu">Meni</NavLink>
-                <NavLink href="#about">O nas</NavLink>
-                <NavLink href="#gallery">Galerija</NavLink>
-                <NavLink href="#hours">Delovni čas</NavLink>
+                <NavA to="/cocktajli">Meni</NavA>
+                <NavA href="/#about">O nas</NavA>
+                <NavA to="/galerija">Galerija</NavA>
+                <NavA href="/#hours">Delovni čas</NavA>
                 <a href="#contact">
                   <Button className="w-full bg-primary text-black hover:brightness-110">Kontakt</Button>
                 </a>
@@ -98,6 +101,9 @@ export default function Layout({ children }) {
           </div>
         )}
       </header>
+
+      {/* Scroll-only gradient veil */}
+      <div id="scroll-veil" className="pointer-events-none fixed inset-0 z-10 opacity-0" style={{background:"radial-gradient(800px 300px at 20% -10%, rgba(244,206,144,0.06), transparent), radial-gradient(800px 300px at 80% -10%, rgba(11,120,138,0.04), transparent)"}} />
 
       <main id="top" className="pt-24">{children}</main>
 

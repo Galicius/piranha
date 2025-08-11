@@ -7,7 +7,10 @@ gsap.registerPlugin(ScrollTrigger);
 export default function useGsapAnimations() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Generic fade-up reveal
+      // Header entrance
+      gsap.from(".site-header", { y: -20, opacity: 0, duration: 0.6, ease: "power2.out" });
+
+      // Fade-up reveal
       gsap.utils.toArray('[data-anim="fade-up"]').forEach((el) => {
         gsap.from(el, {
           y: 24,
@@ -22,7 +25,7 @@ export default function useGsapAnimations() {
         });
       });
 
-      // Card stagger in grids
+      // Grid stagger
       gsap.utils.toArray('.reveal-grid').forEach((grid) => {
         const items = grid.querySelectorAll('.reveal-card');
         gsap.from(items, {
@@ -38,7 +41,7 @@ export default function useGsapAnimations() {
         });
       });
 
-      // Soft parallax for media blocks
+      // Parallax media
       gsap.utils.toArray('.parallax-y').forEach((el) => {
         gsap.to(el, {
           yPercent: -10,
@@ -52,20 +55,16 @@ export default function useGsapAnimations() {
         });
       });
 
-      // CTA subtle pulse on enter
-      gsap.utils.toArray('.cta-reveal').forEach((el) => {
-        gsap.fromTo(
-          el,
-          { scale: 0.98, opacity: 0 },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 0.6,
-            ease: "power2.out",
-            scrollTrigger: { trigger: el, start: "top 85%" },
-          }
-        );
-      });
+      // Scroll-only gradient veil: visible during motion, hidden when idle
+      const veil = document.getElementById("scroll-veil");
+      if (veil) {
+        ScrollTrigger.addEventListener("scrollStart", () => {
+          gsap.to(veil, { opacity: 0.18, duration: 0.25, ease: "power1.out" });
+        });
+        ScrollTrigger.addEventListener("scrollEnd", () => {
+          gsap.to(veil, { opacity: 0, duration: 0.6, ease: "power1.out" });
+        });
+      }
     });
 
     return () => {

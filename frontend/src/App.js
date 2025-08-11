@@ -3,6 +3,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Landing from "./pages/Landing";
+import CocktailsPage from "./pages/CocktailsPage";
+import GalleryPage from "./pages/GalleryPage";
 import Layout from "./components/Layout";
 import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "next-themes";

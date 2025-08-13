@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 
-import { Menu, X, Instagram, Phone, MapPin } from "lucide-react";
+import { Menu, X, Instagram, Phone, MapPin, Eye, EyeOff } from "lucide-react";
 import { brand, address } from "../mock";
 
 import { Link, useLocation } from "react-router-dom";
 import RippleBackground from "./RippleBackground";
+import DemoBanner from "./DemoBanner";
+import DeveloperPromotion from "./DeveloperPromotion";
+import { demoConfig, validateDemoConfig } from "../config/demoConfig";
 
 
 
 export default function Layout({ children }) {
   const [open, setOpen] = useState(false);
+  const [demoEnabled, setDemoEnabled] = useState(demoConfig.watermark.enabled);
   const location = useLocation();
 
   // Handle hash scrolling when location changes
@@ -68,13 +72,46 @@ export default function Layout({ children }) {
     );
   };
 
+  const config = validateDemoConfig({
+    ...demoConfig,
+    watermark: { ...demoConfig.watermark, enabled: demoEnabled },
+    promotion: { ...demoConfig.promotion, enabled: demoEnabled }
+  });
+
+  const toggleDemo = () => {
+    setDemoEnabled(!demoEnabled);
+  };
+
+  const handleContactEmail = () => {
+    const subject = encodeURIComponent("Želim si spletno stran");
+    const body = encodeURIComponent(`Pozdravljeni,
+
+Videl/a sem vaše delo na spletni strani Piranha Cocktail Bureau in me zanima podoben projekt.
+
+Podajam še uporabne informacije za prvi sestanek: (uredite šetvilke po svojih merah)
+- Moj rang cene spletne strani: 1500€-3500€
+- Času izdelave: 1 mesec
+- Možnostih oblikovanja: 3 posvetovanja po gotovi spletni strani
+
+Lep pozdrav
+
+`);
+    window.location.href = `mailto:galgustin@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Demo Banner */}
+      <DemoBanner
+        enabled={config.watermark.enabled}
+        message={config.watermark.text}
+      />
+      
       {/* Ripple Background Effect */}
       <RippleBackground />
 
       {/* Header */}
-      <header className="site-header fixed inset-x-0 top-0 z-50">
+      <header className="site-header fixed inset-x-0 top-0 z-50" style={{ top: config.watermark.enabled ? '36px' : '0' }}>
         <div className="content-container px-4">
           <div className="mt-4 flex items-center justify-between glass rounded-xl px-4 py-3">
             {/* Logo */}
@@ -91,9 +128,22 @@ export default function Layout({ children }) {
               <NavA to="/#about">O nas</NavA>
               <NavA to="/galerija">Galerija</NavA>
               <NavA to="/#hours">Delovni čas</NavA>
-              <NavA to="/#contact">
+              
+              {/* Demo Toggle */}
+              <button
+                onClick={toggleDemo}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-white/20 bg-black/30 text-white/90 hover:bg-black/50 transition-colors text-xs"
+                title={demoEnabled ? "Hide demo indicators" : "Show demo indicators"}
+              >
+                {demoEnabled ? <EyeOff size={14} /> : <Eye size={14} />}
+                <span className="hidden lg:inline">
+                  {demoEnabled ? "Hide Demo" : "Show Demo"}
+                </span>
+              </button>
+              
+              <button onClick={handleContactEmail}>
                 <Button className="bg-primary text-black hover:brightness-110">Kontakt</Button>
-              </NavA>
+              </button>
             </nav>
 
             <button
@@ -115,9 +165,19 @@ export default function Layout({ children }) {
                 <NavA to="/#about">O nas</NavA>
                 <NavA to="/galerija">Galerija</NavA>
                 <NavA to="/#hours">Delovni čas</NavA>
-                <NavA to="/#contact">
+                
+                {/* Mobile Demo Toggle */}
+                <button
+                  onClick={toggleDemo}
+                  className="flex items-center justify-center gap-2 px-3 py-2 rounded-md border border-white/20 bg-black/30 text-white/90 hover:bg-black/50 transition-colors text-sm"
+                >
+                  {demoEnabled ? <EyeOff size={16} /> : <Eye size={16} />}
+                  <span>{demoEnabled ? "Hide Demo" : "Show Demo"}</span>
+                </button>
+                
+                <button onClick={handleContactEmail} className="w-full">
                   <Button className="w-full bg-primary text-black hover:brightness-110">Kontakt</Button>
-                </NavA>
+                </button>
               </div>
             </div>
           </div>
@@ -127,9 +187,21 @@ export default function Layout({ children }) {
       {/* Scroll-only gradient veil */}
       <div id="scroll-veil" className="pointer-events-none fixed inset-0 z-10 opacity-0" style={{ background: "radial-gradient(800px 300px at 20% -10%, rgba(244,206,144,0.06), transparent), radial-gradient(800px 300px at 80% -10%, rgba(11,120,138,0.04), transparent)" }} />
 
-      <main id="top" className="pt-24">
+      <main id="top" className={config.watermark.enabled ? "pt-28" : "pt-24"}>
         <div className="content-container px-4">
           {children}
+          
+          {/* Developer Promotion */}
+          <DeveloperPromotion
+            enabled={config.promotion.enabled}
+            developerName={config.promotion.developerName}
+            tagline={config.promotion.tagline}
+            contactEmail={config.promotion.contactEmail}
+            portfolioUrl={config.promotion.portfolioUrl}
+            message={config.promotion.message}
+            callToAction={config.promotion.callToAction}
+            buttonText={config.promotion.buttonText}
+          />
         </div>
       </main>
 
@@ -180,9 +252,9 @@ export default function Layout({ children }) {
             </div>
 
             <div className="text-right md:text-left">
-              <Link to="/#contact">
+              <button onClick={handleContactEmail}>
                 <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">Kontaktiraj nas</Button>
-              </Link>
+              </button>
             </div>
           </div>
           <p className="mt-8 text-xs text-muted-foreground/70">© {new Date().getFullYear()} Piranha Cocktail Bureau. Vse pravice pridržane.</p>

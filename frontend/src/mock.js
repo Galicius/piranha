@@ -16,13 +16,13 @@ export const galleryImages = [
     alt: "Minty cocktail with fresh herbs",
   },
   {
-    id: "highball-collins", 
+    id: "highball-collins",
     localPath: "cocktails/highball-collins.jpg",
     alt: "Highball Collins cocktail",
   },
   {
     id: "tropical-sour",
-    localPath: "cocktails/tropical-sour.jpg", 
+    localPath: "cocktails/tropical-sour.jpg",
     alt: "Tropical sour cocktail",
   },
   {
@@ -87,7 +87,7 @@ export const signatureCocktails = [
     blurb: "Naša interpretacija klasike – kremast dim, rahla sladkoba in zlata eleganca.",
   },
   {
-    id: "sig-02", 
+    id: "sig-02",
     name: "Tropical Paradise Sour",
     price: 14,
     tags: ["rum", "passion fruit", "lime", "foam"],
@@ -143,45 +143,45 @@ export const getOpenStatus = () => {
   const now = new Date();
   const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
   const currentTime = now.getHours() * 60 + now.getMinutes(); // Current time in minutes
-  
+
   // Map JavaScript day numbers to our hours array indices
   const dayMap = [6, 0, 1, 2, 3, 4, 5]; // Sunday=6, Monday=0, etc.
   const todayIndex = dayMap[currentDay];
   const todayHours = hours[todayIndex];
-  
+
   // Parse opening and closing times
   const [openHour, openMin] = todayHours.open.split(':').map(Number);
   const [closeHour, closeMin] = todayHours.close.split(':').map(Number);
-  
+
   const openTime = openHour * 60 + openMin;
   let closeTime = closeHour * 60 + closeMin;
-  
+
   // Handle closing times after midnight (like 02:00)
   if (closeTime < openTime) {
     closeTime += 24 * 60; // Add 24 hours
   }
-  
+
   let adjustedCurrentTime = currentTime;
   // If current time is early morning and we close after midnight, adjust current time
   if (currentTime < 12 * 60 && closeTime > 24 * 60) {
     adjustedCurrentTime += 24 * 60;
   }
-  
+
   const isOpen = adjustedCurrentTime >= openTime && adjustedCurrentTime < closeTime;
-  
+
   if (isOpen) {
     // Calculate time until closing
     const minutesUntilClose = closeTime - adjustedCurrentTime;
     const hoursUntilClose = Math.floor(minutesUntilClose / 60);
     const minsUntilClose = minutesUntilClose % 60;
-    
+
     let timeUntilClose;
     if (hoursUntilClose > 0) {
       timeUntilClose = `${hoursUntilClose}h ${minsUntilClose}min`;
     } else {
       timeUntilClose = `${minsUntilClose}min`;
     }
-    
+
     return {
       isOpen: true,
       status: "Odprto",
@@ -192,7 +192,7 @@ export const getOpenStatus = () => {
     // Find next opening time
     let nextOpenDay = todayIndex;
     let nextOpenTime = openTime;
-    
+
     // If we haven't opened today yet
     if (currentTime < openTime) {
       nextOpenTime = openTime;
@@ -202,10 +202,10 @@ export const getOpenStatus = () => {
       nextOpenTime = hours[nextOpenDay].open.split(':').map(Number);
       nextOpenTime = nextOpenTime[0] * 60 + nextOpenTime[1];
     }
-    
+
     const nextDayName = hours[nextOpenDay].day;
     const nextOpenTimeStr = hours[nextOpenDay].open;
-    
+
     return {
       isOpen: false,
       status: "Zaprto",
@@ -218,8 +218,8 @@ export const getOpenStatus = () => {
 export const address = {
   line1: "Vojašniška ulica 4",
   city: "2000 Maribor",
-  phone: "041 429 185",
-  email: "hello@piranha.bar",
+  phone: "123 456 789",
+  email: "mail@domain.com",
   instagram: "@piranhacocktailbureau",
   map: "https://maps.google.com/?q=Vojašniška+ulica+4,+2000+Maribor",
 };
@@ -235,7 +235,7 @@ export const aboutQuotes = {
 export const imageById = (id) => {
   const image = galleryImages.find((g) => g.id === id);
   if (!image) return null;
-  
+
   // Use only local images
   return getImageUrl(image.localPath);
 };

@@ -191,8 +191,7 @@ body {
 /* Enhanced Content Container */
 .content-container {
   position: relative;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(1px);
+  background: transparent;
   border-radius: 0;
 }
 

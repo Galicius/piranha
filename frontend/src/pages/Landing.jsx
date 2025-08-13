@@ -24,7 +24,7 @@ function Section({ id, children, className = "" }) {
 
 export default function Landing() {
   useGsapAnimations();
-  
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -38,13 +38,13 @@ export default function Landing() {
   }, []);
 
   const goToPrevious = useCallback(() => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === 0 ? galleryImages.length - 1 : prev - 1
     );
   }, []);
 
   const goToNext = useCallback(() => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === galleryImages.length - 1 ? 0 : prev + 1
     );
   }, []);
@@ -58,7 +58,7 @@ export default function Landing() {
       <CTA />
       <Contact />
       <Hours />
-      
+
       {/* Lightbox */}
       <ImageLightbox
         isOpen={lightboxOpen}
@@ -73,6 +73,23 @@ export default function Landing() {
 }
 
 function Hero({ openLightbox }) {
+  const handleContactEmail = () => {
+    const subject = encodeURIComponent("Želim si spletno stran");
+    const body = encodeURIComponent(`Pozdravljeni,
+
+Videl/a sem vaše delo na spletni strani Piranha Cocktail Bureau in me zanima podoben projekt.
+
+Podajam še uporabne informacije za prvi sestanek: (uredite šetvilke po svojih merah)
+- Moj rang cene spletne strani: 1500€-3500€
+- Času izdelave: 1 mesec
+- Možnostih oblikovanja: 3 posvetovanja po gotovi spletni strani
+
+Lep pozdrav
+
+`);
+    window.location.href = `mailto:galgustin@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className="relative overflow-hidden">
       {/* subtle top glow */}
@@ -90,9 +107,9 @@ function Hero({ openLightbox }) {
             Črno ozadje. Zlate podrobnosti. Koktajli, ki ukradejo pozornost. Dobrodošli v Piranhi – doma najboljših pijač.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#contact">
+            <button onClick={handleContactEmail}>
               <Button className="bg-primary text-black hover:brightness-110">Kontaktiraj nas</Button>
-            </a>
+            </button>
             <a href="#menu">
               <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">Poglej meni</Button>
             </a>
@@ -109,9 +126,9 @@ function Hero({ openLightbox }) {
                   .map((img, index) => (
                     <CarouselItem key={img.id} className="basis-full">
                       <div className="overflow-hidden rounded-xl">
-                        <img 
-                          src={getImageUrl(img.localPath, img.fallbackUrl)} 
-                          alt={img.alt} 
+                        <img
+                          src={getImageUrl(img.localPath, img.fallbackUrl)}
+                          alt={img.alt}
                           className="h-[420px] w-full object-cover cursor-pointer hover:brightness-110 transition-all duration-300"
                           loading={index === 0 ? "eager" : "lazy"}
                           decoding="async"
@@ -145,13 +162,13 @@ function SignatureMenu() {
   }, []);
 
   const goToPreviousCocktail = useCallback(() => {
-    setCurrentCocktailIndex((prev) => 
+    setCurrentCocktailIndex((prev) =>
       prev === 0 ? signatureCocktails.length - 1 : prev - 1
     );
   }, []);
 
   const goToNextCocktail = useCallback(() => {
-    setCurrentCocktailIndex((prev) => 
+    setCurrentCocktailIndex((prev) =>
       prev === signatureCocktails.length - 1 ? 0 : prev + 1
     );
   }, []);
@@ -189,10 +206,10 @@ function SignatureMenu() {
         {signatureCocktails.map((c, index) => (
           <Card key={c.id} className="reveal-card group relative overflow-hidden border-white/10 bg-black/40 dark:bg-black/40">
             <div className="overflow-hidden">
-              <img 
-                src={imageById(c.imageId)} 
-                alt={c.name} 
-                className="h-56 w-full object-cover transition-[filter] duration-500 group-hover:brightness-110 cursor-pointer" 
+              <img
+                src={imageById(c.imageId)}
+                alt={c.name}
+                className="h-56 w-full object-cover transition-[filter] duration-500 group-hover:brightness-110 cursor-pointer"
                 onClick={() => openCocktailLightbox(index)}
               />
             </div>
@@ -281,10 +298,10 @@ function Gallery({ openLightbox }) {
           {galleryImages.map((img, index) => (
             <CarouselItem key={img.id} className="basis-full md:basis-1/2 lg:basis-1/3">
               <div className="glass overflow-hidden rounded-xl">
-                <img 
-                  src={getImageUrl(img.localPath, img.fallbackUrl)} 
-                  alt={img.alt} 
-                  className="h-64 w-full object-cover cursor-pointer hover:brightness-110 transition-all duration-300" 
+                <img
+                  src={getImageUrl(img.localPath, img.fallbackUrl)}
+                  alt={img.alt}
+                  className="h-64 w-full object-cover cursor-pointer hover:brightness-110 transition-all duration-300"
                   onClick={() => openLightbox(index)}
                   loading={index < 3 ? "eager" : "lazy"}
                   decoding="async"
@@ -301,6 +318,23 @@ function Gallery({ openLightbox }) {
 }
 
 function CTA() {
+  const handleContactEmail = () => {
+    const subject = encodeURIComponent("Želim si spletno stran");
+    const body = encodeURIComponent(`Pozdravljeni,
+
+Videl/a sem vaše delo na spletni strani Piranha Cocktail Bureau in me zanima podoben projekt.
+
+Podajam še uporabne informacije za prvi sestanek: (uredite šetvilke po svojih merah)
+- Moj rang cene spletne strani: 1500€-3500€
+- Času izdelave: 1 mesec
+- Možnostih oblikovanja: 3 posvetovanja po gotovi spletni strani
+
+Lep pozdrav
+
+`);
+    window.location.href = `mailto:galgustin@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <Section className="py-12">
       <div className="cta-reveal relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-white/5 to-white/0 p-8 dark:from-white/5">
@@ -311,9 +345,9 @@ function CTA() {
             <p className="mt-2 max-w-prose text-sm text-muted-foreground">Pišite nam in pripravili bomo mizo ali tasting, ki vam bo sedel kot ulit.</p>
           </div>
           <div className="text-right">
-            <a href="#contact">
+            <button onClick={handleContactEmail}>
               <Button size="lg" className="bg-primary px-8 text-black hover:brightness-110">Kontakt</Button>
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -345,17 +379,17 @@ function Contact() {
           <p className="mt-2 text-sm text-muted-foreground">Za rezervacije, dogodke ali degustacije nas kontaktirajte. Odgovorimo hitro.</p>
 
           <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> Rezervacije miz in skupin</li>
-            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> Privatni eventi in pop-upi</li>
-            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> Tasting meniji po meri</li>
+            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary" /> Rezervacije miz in skupin</li>
+            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary" /> Privatni eventi in pop-upi</li>
+            <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary" /> Tasting meniji po meri</li>
           </ul>
 
           <div className="mt-8 space-y-3 text-sm">
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Naslov</p>
-              <a 
-                href={address.map} 
-                target="_blank" 
+              <a
+                href={address.map}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:brightness-110 transition-colors"
               >
@@ -365,7 +399,7 @@ function Contact() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Telefon</p>
-              <a 
+              <a
                 href={`tel:${address.phone.replace(/\s/g, '')}`}
                 className="text-primary hover:brightness-110 transition-colors"
               >
@@ -374,7 +408,7 @@ function Contact() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Email</p>
-              <a 
+              <a
                 href={`mailto:${address.email}`}
                 className="text-primary hover:brightness-110 transition-colors"
               >
@@ -383,7 +417,7 @@ function Contact() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Instagram</p>
-              <a 
+              <a
                 href={`https://instagram.com/${address.instagram.replace('@', '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -445,14 +479,12 @@ function Hours() {
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-serif text-2xl">Delovni čas</h3>
           <div className="text-right">
-            <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium ${
-              openStatus.isOpen 
-                ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+            <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium ${openStatus.isOpen
+                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
                 : 'bg-red-500/20 text-red-400 border border-red-500/30'
-            }`}>
-              <div className={`h-2 w-2 rounded-full ${
-                openStatus.isOpen ? 'bg-green-400' : 'bg-red-400'
-              }`} />
+              }`}>
+              <div className={`h-2 w-2 rounded-full ${openStatus.isOpen ? 'bg-green-400' : 'bg-red-400'
+                }`} />
               {openStatus.status}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
@@ -467,25 +499,22 @@ function Hours() {
             const dayMap = [6, 0, 1, 2, 3, 4, 5]; // Sunday=6, Monday=0, etc.
             const todayIndex = dayMap[currentDay];
             const isToday = index === todayIndex;
-            
+
             return (
-              <div 
-                key={h.day} 
-                className={`flex items-center justify-between rounded-lg border px-4 py-3 ${
-                  isToday 
-                    ? 'border-primary/50 bg-primary/10 dark:bg-primary/10' 
+              <div
+                key={h.day}
+                className={`flex items-center justify-between rounded-lg border px-4 py-3 ${isToday
+                    ? 'border-primary/50 bg-primary/10 dark:bg-primary/10'
                     : 'border-white/5 bg-black/30 dark:bg-black/30'
-                }`}
+                  }`}
               >
-                <span className={`text-sm ${
-                  isToday ? 'text-primary font-medium' : 'text-muted-foreground'
-                }`}>
+                <span className={`text-sm ${isToday ? 'text-primary font-medium' : 'text-muted-foreground'
+                  }`}>
                   {h.day}
                   {isToday && <span className="ml-2 text-xs">(danes)</span>}
                 </span>
-                <span className={`text-sm ${
-                  isToday ? 'text-primary font-medium' : 'text-foreground'
-                }`}>
+                <span className={`text-sm ${isToday ? 'text-primary font-medium' : 'text-foreground'
+                  }`}>
                   {h.time}
                 </span>
               </div>

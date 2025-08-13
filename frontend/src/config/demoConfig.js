@@ -10,7 +10,7 @@ export const demoConfig = {
   // Demo banner configuration
   watermark: {
     enabled: true,
-    text: "Stran še ni aktivna - demo verzija",
+    text: "Stran še ni aktivna - demo verzija, podatki so izmišljeni",
     opacity: 0.03,
     fontSize: {
       mobile: "1.5rem",
@@ -39,7 +39,7 @@ export const validateDemoConfig = (config = demoConfig) => {
   const defaults = {
     watermark: {
       enabled: true,
-      text: "Stran še ni aktivna - demo verzija",
+      text: "Stran še ni aktivna - demo verzija, podatki so izmišljeni",
       opacity: 0.03,
       fontSize: {
         mobile: "1.5rem",

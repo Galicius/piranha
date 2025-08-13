@@ -3,7 +3,7 @@ import { AlertTriangle } from 'lucide-react';
 
 export default function DemoBanner({
   enabled = true,
-  message = "Stran še ni aktivna - demo verzija"
+  message = "Stran še ni aktivna - demo verzija, podatki so izmišljeni"
 }) {
   // Don't render if disabled
   if (!enabled) return null;

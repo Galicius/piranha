@@ -10,69 +10,83 @@ import { getImageUrl } from './utils/images';
 
 export const galleryImages = [
   // Your actual cocktail images with proper names and categories
+  // Add blobUrl property when images are uploaded to Vercel Blob
   {
     id: "minty-cocktail",
     localPath: "cocktails/minty-cocktail.jpg",
+    blobUrl: null, // Will be populated after upload to Vercel Blob
     alt: "Minty cocktail with fresh herbs",
   },
   {
     id: "highball-collins",
     localPath: "cocktails/highball-collins.jpg",
+    blobUrl: null,
     alt: "Highball Collins cocktail",
   },
   {
     id: "tropical-sour",
     localPath: "cocktails/tropical-sour.jpg",
+    blobUrl: null,
     alt: "Tropical sour cocktail",
   },
   {
     id: "spirit-forward-cocktail",
     localPath: "cocktails/spirit-forward-cocktail.jpg",
+    blobUrl: null,
     alt: "Spirit-forward cocktail",
   },
   {
     id: "martini-cosmo",
     localPath: "cocktails/martini-cosmo.jpg",
+    blobUrl: null,
     alt: "Martini or Cosmopolitan style cocktail",
   },
   {
     id: "old-fashioned",
     localPath: "cocktails/old-fashioned.jpg",
+    blobUrl: null,
     alt: "Classic Old Fashioned cocktail",
   },
   {
     id: "whiskey-sour",
     localPath: "cocktails/whiskey-sour.jpg",
+    blobUrl: null,
     alt: "Whiskey Sour cocktail",
   },
   {
     id: "neat-pour-rocks",
     localPath: "cocktails/neat-pour-rocks.jpg",
+    blobUrl: null,
     alt: "Neat pour or on the rocks cocktail",
   },
   {
     id: "process-shot-1",
     localPath: "gallery/process/IMG_7655.JPG",
+    blobUrl: null,
     alt: "Cocktail making process",
   },
   {
     id: "process-shot-2",
     localPath: "gallery/process/IMG_7656.JPG",
+    blobUrl: null,
     alt: "Behind the scenes cocktail preparation",
   },
   {
     id: "process-shot-3",
     localPath: "gallery/process/IMG_7660.JPG",
+    blobUrl: null,
     alt: "Professional cocktail crafting",
   },
   {
     id: "process-shot-4",
     localPath: "gallery/process/IMG_7810.JPG",
+    blobUrl: null,
     alt: "Cocktail preparation technique",
   },
   {
     id: "process-shot-5",
     localPath: "gallery/process/IMG_7833.JPG",
+    blobUrl: null,
     alt: "Final cocktail preparation step",
   },
 ];
@@ -231,11 +245,12 @@ export const aboutQuotes = {
     "Vabljeni k okušanju zbirke koktajlov, ki vas bodo popeljali na uživaško potovanje skozi desetletno zgodovino, z vznemirljivim ciljem … nekje v prihodnosti. Vkrcajte se!",
 };
 
-// Helper to resolve image by id - local images only
+// Helper to resolve image by id - prioritizes Vercel Blob URLs, falls back to local
 export const imageById = (id) => {
   const image = galleryImages.find((g) => g.id === id);
   if (!image) return null;
 
-  // Use only local images
-  return getImageUrl(image.localPath);
+  // Prioritize Vercel Blob URL if available, otherwise use local path
+  const imagePath = image.blobUrl || image.localPath;
+  return getImageUrl(imagePath);
 };

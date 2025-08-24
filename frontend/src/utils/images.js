@@ -1,12 +1,18 @@
 // Image utility functions for Piranha Cocktail Bureau
+import { getOptimizedBlobUrl, getBlobResponsiveSrcSet } from './blobStorage';
 
 /**
- * Get the public URL for an image
- * @param {string} imagePath - Path relative to /images/ folder
+ * Get the public URL for an image (supports both local and Vercel Blob)
+ * @param {string} imagePath - Path relative to /images/ folder or Vercel Blob URL
  * @param {string} fallbackUrl - External URL to use as fallback
  * @returns {string} - Complete image URL
  */
 export const getImageUrl = (imagePath, fallbackUrl = null) => {
+  // If it's a Vercel Blob URL, return as-is
+  if (imagePath && imagePath.includes('vercel-storage.com')) {
+    return imagePath;
+  }
+
   // Only use local images - no fallbacks to external URLs
   if (imagePath && !imagePath.startsWith('http')) {
     // In development, PUBLIC_URL is often empty, so we need to handle that
@@ -19,17 +25,36 @@ export const getImageUrl = (imagePath, fallbackUrl = null) => {
 };
 
 /**
- * Get optimized image URL with different sizes
- * @param {string} imagePath - Path relative to /images/ folder
+ * Get optimized image URL with different sizes (supports both local and Vercel Blob)
+ * @param {string} imagePath - Path relative to /images/ folder or Vercel Blob URL
  * @param {string} size - Size variant ('thumb', 'medium', 'large', 'original')
  * @param {string} fallbackUrl - External URL to use as fallback
  * @returns {string} - Optimized image URL
  */
 export const getOptimizedImageUrl = (imagePath, size = 'medium', fallbackUrl = null) => {
-  if (!imagePath || imagePath.startsWith('http')) {
-    return imagePath || fallbackUrl;
+  if (!imagePath) {
+    return fallbackUrl;
   }
 
+  // Handle Vercel Blob URLs with optimization
+  if (imagePath.includes('vercel-storage.com')) {
+    const sizeMap = {
+      thumb: { width: 400, quality: 80 },
+      medium: { width: 800, quality: 85 },
+      large: { width: 1200, quality: 90 },
+      original: {}
+    };
+
+    const options = sizeMap[size] || sizeMap.medium;
+    return getOptimizedBlobUrl(imagePath, options);
+  }
+
+  // Handle external URLs
+  if (imagePath.startsWith('http')) {
+    return imagePath;
+  }
+
+  // Handle local images
   const sizeMap = {
     thumb: '400',
     medium: '800',
@@ -50,30 +75,48 @@ export const getOptimizedImageUrl = (imagePath, size = 'medium', fallbackUrl = n
 };
 
 /**
- * Preload an image for better performance
+ * Preload an image for better performance (supports both local and Vercel Blob)
  * @param {string} imageUrl - URL of the image to preload
+ * @param {Object} options - Optimization options for Vercel Blob images
  * @returns {Promise} - Promise that resolves when image is loaded
  */
-export const preloadImage = (imageUrl) => {
+export const preloadImage = (imageUrl, options = {}) => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = resolve;
     img.onerror = reject;
-    img.src = imageUrl;
+    
+    // Use optimized URL for Vercel Blob images
+    if (imageUrl && imageUrl.includes('vercel-storage.com')) {
+      img.src = getOptimizedBlobUrl(imageUrl, options);
+    } else {
+      img.src = imageUrl;
+    }
   });
 };
 
 /**
- * Get responsive image srcSet for different screen densities
- * @param {string} imagePath - Path relative to /images/ folder
+ * Get responsive image srcSet for different screen densities (supports both local and Vercel Blob)
+ * @param {string} imagePath - Path relative to /images/ folder or Vercel Blob URL
  * @param {string} fallbackUrl - External URL to use as fallback
  * @returns {string} - srcSet string for responsive images
  */
 export const getResponsiveSrcSet = (imagePath, fallbackUrl = null) => {
-  if (!imagePath || imagePath.startsWith('http')) {
-    return imagePath || fallbackUrl;
+  if (!imagePath) {
+    return fallbackUrl;
   }
 
+  // Handle Vercel Blob URLs
+  if (imagePath.includes('vercel-storage.com')) {
+    return getBlobResponsiveSrcSet(imagePath);
+  }
+
+  // Handle external URLs
+  if (imagePath.startsWith('http')) {
+    return imagePath;
+  }
+
+  // Handle local images
   const baseUrl = `${process.env.PUBLIC_URL}/images/${imagePath}`;
 
   if (imagePath.includes('.')) {

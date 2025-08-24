@@ -4,6 +4,7 @@ import { Card, CardContent } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import useGsapAnimations from "../hooks/useGsapAnimations";
 import ImageLightbox from "../components/ImageLightbox";
+import OptimizedImage from "../components/OptimizedImage";
 
 export default function CocktailsPage() {
   useGsapAnimations();
@@ -98,12 +99,13 @@ export default function CocktailsPage() {
       <div className="reveal-grid grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {list.map((c, index) => (
           <Card key={c.id} className="reveal-card overflow-hidden border-white/10 bg-black/40 dark:bg-black/40">
-            <img 
-              src={imageById(c.imageId)} 
-              alt={c.name} 
-              className="h-60 w-full object-cover cursor-pointer hover:brightness-110 transition-all duration-300" 
+            <OptimizedImage
+              src={imageById(c.imageId)}
+              alt={c.name}
+              className="h-60 cursor-pointer hover:brightness-110 transition-all duration-300"
               loading={index < 6 ? "eager" : "lazy"}
-              decoding="async"
+              size="medium"
+              responsive={true}
               onClick={() => openLightbox(c.id)}
             />
             <CardContent className="space-y-2 p-5">

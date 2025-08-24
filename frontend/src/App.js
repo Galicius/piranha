@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import CocktailsPage from "./pages/CocktailsPage";
 import GalleryPage from "./pages/GalleryPage";
+import DevToolsPage from "./pages/DevToolsPage";
 import Layout from "./components/Layout";
 import { Toaster } from "./components/ui/sonner";
 import { ThemeProvider } from "next-themes";
@@ -18,6 +19,7 @@ function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/cocktajli" element={<CocktailsPage />} />
               <Route path="/galerija" element={<GalleryPage />} />
+              <Route path="/dev-tools" element={<DevToolsPage />} />
             </Routes>
           </Layout>
         </BrowserRouter>

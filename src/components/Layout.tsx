@@ -137,9 +137,9 @@ Lep pozdrav
                 </span>
               </button>
               
-              <button onClick={handleContactEmail}>
-                <Button className="bg-primary text-black hover:brightness-110">Kontakt</Button>
-              </button>
+              <Button onClick={handleContactEmail} className="bg-primary text-black hover:brightness-110">
+                Kontakt
+              </Button>
             </nav>
 
             <button
@@ -171,9 +171,9 @@ Lep pozdrav
                   <span>{demoEnabled ? "Hide Demo" : "Show Demo"}</span>
                 </button>
                 
-                <button onClick={handleContactEmail} className="w-full">
-                  <Button className="w-full bg-primary text-black hover:brightness-110">Kontakt</Button>
-                </button>
+                <Button onClick={handleContactEmail} className="w-full bg-primary text-black hover:brightness-110">
+                  Kontakt
+                </Button>
               </div>
             </div>
           </div>
@@ -192,11 +192,9 @@ Lep pozdrav
                 <p className="text-muted-foreground mb-4">
                   Ta spletna stran je bila izdelana kot demo projekt. Kontaktirajte me za vaš projekt!
                 </p>
-                <button onClick={handleContactEmail}>
-                  <Button className="bg-primary text-black hover:brightness-110">
-                    Kontaktiraj razvijalca
-                  </Button>
-                </button>
+                <Button onClick={handleContactEmail} className="bg-primary text-black hover:brightness-110">
+                  Kontaktiraj razvijalca
+                </Button>
               </div>
             </div>
           )}
@@ -250,11 +248,9 @@ Lep pozdrav
             </div>
 
             <div className="text-right md:text-left">
-              <button onClick={handleContactEmail}>
-                <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">
-                  Kontaktiraj nas
-                </Button>
-              </button>
+              <Button onClick={handleContactEmail} variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">
+                Kontaktiraj nas
+              </Button>
             </div>
           </div>
           <p className="mt-8 text-xs text-muted-foreground/70">

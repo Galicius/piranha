@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Temporarily disable static export to fix build timeout
+  // output: 'export',
   trailingSlash: true,
   images: {
     unoptimized: true,
@@ -17,9 +18,9 @@ const nextConfig = {
   env: {
     BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
   },
-  // Enable static export for GitHub Pages
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/piranha' : '',
-  basePath: process.env.NODE_ENV === 'production' ? '/piranha' : '',
+  // Temporarily disable GitHub Pages config
+  // assetPrefix: process.env.NODE_ENV === 'production' ? '/piranha' : '',
+  // basePath: process.env.NODE_ENV === 'production' ? '/piranha' : '',
 }
 
 module.exports = nextConfig

@@ -137,7 +137,10 @@ Lep pozdrav
                 </span>
               </button>
               
-              <Button onClick={handleContactEmail} className="bg-primary text-black hover:brightness-110">
+              <Button 
+                onClick={handleContactEmail} 
+                className="bg-primary text-black hover:brightness-110"
+              >
                 Kontakt
               </Button>
             </nav>
